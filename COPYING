@@ -1,0 +1,43 @@
+The media files in YoFrankie are licensed under the Creative Commons
+Attribution 3.0 License.
+To view a copy of this license see the file "CC3.0",
+visit http://creativecommons.org/licenses/by/3.0/
+or send a letter to
+ Creative Commons, 543 Howard Street,
+ 5th Floor, San Francisco, California, 94105, USA.
+
+The attribution is:
+YoFrankie! (c) 2008, Blender Foundation, www.blender.org
+If in doubt, please visit www.creativecommons.org for help.
+Excluded from the Creative Commons license is:
+- Source code (python scripts) which are licenced under the GPLv2 or greater.
+
+--------------------- Example Usage -------------------
+You can use textures and .blend files (or models, rigs, etc) 
+from the data collection, also in commercial projects.
+Make sure we get our credit as mentioned above in 2).
+
+You can use the characters and models to create, distribute
+or sell new games. The originals of the assets you've used
+have to be copied to  your game distribution as well,
+including this license.
+You also have to add the attribution in a fair way
+(equal to credits for similar contributions to the project).
+
+Contact email for further information: foundation (at) blender.org
+
+--------------------- Media ---------------------------
+All Media is licenced Creative Commons Attribution 3.0
+ see: http://creativecommons.org/licenses/by/3.0/
+ Media is defined as any graphics files (*.png, *.tga, *.jpeg, *.jpg, *.xcf,
+ *.svg, *.ttf) any 3D scene (*.blend) and any sound (*.wav)
+
+ Note that whilst being binary, *.blend files are not binary blobs
+ and contain no architecture dependent machine code.
+
+
+--------------------- Source Code ---------------------
+Licensed under the GPL unless expressly stated otherwise.
+This includes all python scripts (*.py) and dist/yofrankie-bge,
+ dist/yofrankie-bge.desktop
+For the full text see the file "GPL-2"

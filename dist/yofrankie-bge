@@ -1,0 +1,3 @@
+#!/bin/sh
+exec blenderplayer /usr/share/yofrankie-bge/levels/start_menu.blend
+
