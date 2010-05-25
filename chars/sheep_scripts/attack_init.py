@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -32,7 +33,7 @@ def main(cont):
 	if not predator_ob:
 		return
 	
-	if not ('hit' in predator_ob and predator_ob.has_key('life')):
+	if not ('hit' in predator_ob and 'life' in predator_ob):
 		print('\tattack: predator missing "hit" or "life" property')
 		return
 	

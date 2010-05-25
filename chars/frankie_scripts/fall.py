@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -25,7 +26,7 @@ It also clamps the fall speed and detects when he is going to land so it can pla
 '''
 import GameLogic
 
-from Mathutils import Vector
+from mathutils import Vector
 
 DBL_JUMP_KEYHELD = 0
 DBL_JUMP_OK = 1
@@ -53,7 +54,7 @@ def do_clamp_speed(own, cont, velocity):
 	Clamp the x/y velocity, we can do speedups etc here
 	but for now just clamping at around run speed is fine.
 	'''
-	velocity_vec = Vector(velocity[0], velocity[1])
+	velocity_vec = Vector([velocity[0], velocity[1]])
 	l = velocity_vec.length
 
 

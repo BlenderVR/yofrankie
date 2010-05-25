@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -68,7 +69,7 @@ def main(cont):
 	if blend_name or scene_name:
 		for sce in GameLogic.getSceneList():
 			if sce.name == 'hud':
-				loading_ob = sce.objects['OBloading']
+				loading_ob = sce.objects['loading']
 				if not loading_ob.visible:
 					loading_ob.visible = True
 					return
@@ -84,7 +85,7 @@ def main(cont):
 		except:	pass
 		
 		if target_name:
-			globalDict['PORTAL_OBNAME'] = 'OB' + target_name
+			globalDict['PORTAL_OBNAME'] = target_name
 		
 		if scene_name:
 			globalDict['PORTAL_SCENENAME'] = scene_name
@@ -103,7 +104,7 @@ def main(cont):
 		except:	pass
 		
 		if target_name:
-			globalDict['PORTAL_OBNAME'] = 'OB' + target_name
+			globalDict['PORTAL_OBNAME'] = target_name
 		
 		# Backup props
 		backupProps(own)
@@ -112,7 +113,7 @@ def main(cont):
 	else:
 		# Simple, only move to the portal.
 		try:
-			target_ob = sce.objects['OB'+target_name]
+			target_ob = sce.objects[target_name]
 		except:
 			print('Oops: portal switch error,', target_name, 'object is not in the scene')
 			return

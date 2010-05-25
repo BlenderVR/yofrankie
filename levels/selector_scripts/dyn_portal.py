@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -18,8 +19,8 @@
 
 
 import GameLogic
-import Mathutils
-from Mathutils import Vector, RotationMatrix
+import mathutils
+from mathutils import Vector, RotationMatrix
 
 def main(cont):
 	
@@ -75,7 +76,7 @@ def main(cont):
 		return
 	
 	# Some vars for positioning the portals
-	start = Vector(7,0,0) # rotate this point around to place the portals to new levels
+	start = Vector([7,0,0]) # rotate this point around to place the portals to new levels
 	
 	
 	totFiles = float(totFiles)
@@ -83,7 +84,7 @@ def main(cont):
 	for i,f in enumerate(blendFiles):
 		ang = 360 * (i/totFiles)
 		# print(i,f,ang)
-		mat = RotationMatrix(ang, 3, 'z')
+		mat = RotationMatrix(ang, 3, 'Z')
 		pos_xy = list((start * mat) + own_pos)  # rotate and center around the gamelogic object
 		
 		ray_down = pos_xy[:]

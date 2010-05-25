@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -21,7 +22,8 @@ import GameLogic
 
 # Hit a Kill Object? How much and reset the time.
 
-from Mathutils import Vector, Matrix, RotationMatrix, AngleBetweenVecs, Rand
+import random
+from mathutils import Vector, Matrix, RotationMatrix
 
 '''
 import GameLogic as g
@@ -60,7 +62,7 @@ def reset_target(own, cont, own_pos, predator_ob):
 	
 	own['target_time'] = 0.0
 	
-	L = TARGET_DIST_MIN + (Rand() * (TARGET_DIST_MAX-TARGET_DIST_MIN))
+	L = TARGET_DIST_MIN + (random.random() * (TARGET_DIST_MAX-TARGET_DIST_MIN))
 
 	own_front= own.getAxisVect((0.0, L, 0.0))
 	
@@ -114,8 +116,8 @@ def reset_target(own, cont, own_pos, predator_ob):
 			new_dir.length = L
 			
 			# new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'z')
-			ang = (Rand()*45) - (45/2.0)
-			new_dir = new_dir * RotationMatrix(ang, 3, 'z')
+			ang = (random.random()*45) - (45/2.0)
+			new_dir = new_dir * RotationMatrix(ang, 3, 'Z')
 			
 			own['target_x'] = new_dir.x + own_pos[0]
 			own['target_y'] = new_dir.y + own_pos[1]
@@ -123,8 +125,8 @@ def reset_target(own, cont, own_pos, predator_ob):
 	else:
 		### print('RANDOM')
 		# Random target
-		ang = 90 + (Rand()*180)
-		new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'z')
+		ang = 90 + (random.random()*180)
+		new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
 			
 		own['target_x'] = new_dir.x + own_pos[0]
 		own['target_y'] = new_dir.y + own_pos[1]
@@ -132,7 +134,7 @@ def reset_target(own, cont, own_pos, predator_ob):
 	# setpos([own['target_x'], own['target_y'], 0.0])
 
 def target_direction(own, cont, own_pos):
-	return Vector(own['target_x']-own_pos[0], own['target_y']-own_pos[1], 0.0)
+	return Vector([own['target_x']-own_pos[0], own['target_y']-own_pos[1], 0.0])
 
 def angle_target(own, cont, own_pos):
 	# Head towards our target 
@@ -141,7 +143,7 @@ def angle_target(own, cont, own_pos):
 	# own_mat = Matrix(*own.localOrientation).transpose()
 	own_y = Vector(own.getAxisVect((0.0, 1.0, 0.0)))
 	own_y.z = 0.0
-	ang = AngleBetweenVecs(own_y, direction)
+	ang = own_y.angle(direction)
 	if direction.cross(own_y).z < 0.0:
 		ang = -ang
 	return ang

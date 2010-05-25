@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -19,7 +20,7 @@
 
 # import frank_ledge_module
 import GameLogic
-from Mathutils import Vector, Matrix, RotationMatrix, AngleBetweenVecs
+from mathutils import Vector, Matrix, RotationMatrix
 from ledge_test import frankTestLedge, CLIMB_HANG_Y_OFFSET, CLIMB_HANG_Z_OFFSET
 
 def do_reset_timeofs(cont):
@@ -78,12 +79,12 @@ def main(cont):
 	
 	# We need to do somthing a bit extra tricky here, move the position of frankie around the ray intersect pivot,
 	# This avoids jittering
-	new_dir = Vector(-ledge_nor[0], -ledge_nor[1], 0.0)
+	new_dir = Vector([-ledge_nor[0], -ledge_nor[1], 0.0])
 	new_z = zpos + CLIMB_HANG_Z_OFFSET
 	own_y = Vector( own.getAxisVect((0.0, 1.0, 0.0)) )
 	ledge_hit = Vector(ledge_hit)
 	cross =own_y.cross(new_dir)
-	ang = AngleBetweenVecs(own_y, new_dir)
+	ang = own_y.angle(new_dir)
 	
 	# Set Frankies distance from the hit position
 	
@@ -99,7 +100,7 @@ def main(cont):
 		d.z = 0.0
 		d.length = -CLIMB_HANG_Y_OFFSET
 
-		pos_new = (d*RotationMatrix(ang, 3, 'z')) + ledge_hit
+		pos_new = (d*RotationMatrix(ang, 3, 'Z')) + ledge_hit
 		
 	else:
 		# Simple but not good enough

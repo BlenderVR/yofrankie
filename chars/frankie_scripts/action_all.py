@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -31,7 +32,7 @@ Once the action is done the "action_name" property is cleared so other actions c
 '''
 import GameLogic
 import GameTypes
-from Mathutils import Vector, AngleBetweenVecs
+from mathutils import Vector
 
 
 def side_of_other(own, other):
@@ -173,10 +174,9 @@ def kick_raytest(cont, own):
 		return
 	
 	# Pitty but radar is buggy- test angle here
-	ang = AngleBetweenVecs( \
-		( Vector(own.getAxisVect((0.0, 1.0, 0.0))) ), \
-		( Vector(hit_ob.worldPosition) - Vector(own.worldPosition) ) \
-	)
+	ang = \
+		Vector(own.getAxisVect((0.0, 1.0, 0.0))).angle( \
+		Vector(hit_ob.worldPosition) - Vector(own.worldPosition) )
 	
 	if ang > 33.0:	
 		return None

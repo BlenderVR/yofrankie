@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -57,7 +58,7 @@ def main(cont):
 	# Lets be tricky here
 	# the object name is prefixed by the Python dictionary key for configuring it.
 	# remember to remove OB
-	conf_dict_key = own_display.name[2:].split('.')[0]
+	conf_dict_key = own_display.name.split('.')[0]
 	
 	conf[conf_dict_key] = key_id
 	

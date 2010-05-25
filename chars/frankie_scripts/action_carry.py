@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -21,7 +22,7 @@
 Run when a carry object hits us and attach it to our hand if all is right (and the moons are aligned)
 '''
 import GameLogic
-from  Mathutils import Matrix
+from mathutils import Matrix
 
 # We use this a lot, just to be neat
 def dontCatch(cont):

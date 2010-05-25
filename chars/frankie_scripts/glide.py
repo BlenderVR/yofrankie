@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -21,7 +22,7 @@
 This script controlls frankies gliding angle, speed etc
 '''
 import GameLogic
-from Mathutils import Vector
+from mathutils import Vector
 
 TIME_OFFSET = 1000.0
 # Set the velocity when gliding		
@@ -111,7 +112,7 @@ def main(cont):
 	
 	# We COULD just use own_y, but better compensate for the existing 
 	# Calculate XY!
-	orig_xy_speed = Vector(vel[0], vel[1]).length
+	orig_xy_speed = Vector([vel[0], vel[1]]).length
 	
 	fac = speed_inv * GLIDE_ACCEL
 	
@@ -120,7 +121,7 @@ def main(cont):
 	if orig_xy_speed > GLIDE_SPEED_LIMIT:
 		orig_xy_speed = GLIDE_SPEED_LIMIT
 	# normalize and scale to original speed, use verbose python
-	own_y_length = Vector(own_y[0], own_y[1]).length
+	own_y_length = Vector([own_y[0], own_y[1]]).length
 	new_x = (own_y[0]/own_y_length) * orig_xy_speed
 	new_y = (own_y[1]/own_y_length) * orig_xy_speed
 	#new_xy = Vector(own_y[0], own_y[1])

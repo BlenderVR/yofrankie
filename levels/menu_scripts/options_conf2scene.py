@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -24,7 +25,7 @@ Take options from the dict and set the scene up from these.
 import GameKeys
 import GameLogic
 
-ITEM_PREFIX = 'OBitem_'
+ITEM_PREFIX = 'item_'
 
 def main():
 	# print('Setting scene properties from python configuration dictionary')
@@ -46,7 +47,7 @@ def main():
 		name = ob.name
 		
 		# Keys are not menu items, they are a special case
-		if name[2:].startswith('KEY_'):
+		if name.startswith('KEY_'):
 			obs_key.append(ob)
 			continue
 		
@@ -104,7 +105,7 @@ def main():
 	
 	# ***************************
 	# Key Setings
-	key_mapping = dict([(ob.name[2:].split('.')[0], ob) for ob in obs_key ]) # object names to key names
+	key_mapping = dict([(ob.name.split('.')[0], ob) for ob in obs_key ]) # object names to key names
 
 	def confKeyObSet(opt):
 		try:	ob=	key_mapping[opt]

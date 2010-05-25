@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -26,7 +27,7 @@ If he can grab it, move to the grab state.
 Most of the logic here is in "ledge_test.frankTestLedge"
 '''
 import GameLogic
-import Mathutils
+import mathutils
 from ledge_test import frankTestLedge
 
 def main(cont):

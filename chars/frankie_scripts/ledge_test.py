@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -26,8 +27,8 @@
 # import debug
 # reload(debug)
 
-import GameLogic, Mathutils
-from Mathutils import Vector
+import GameLogic, mathutils
+from mathutils import Vector
 
 CLIMB_HANG_Y_OFFSET = -0.25
 CLIMB_HANG_Z_OFFSET = -0.35
@@ -119,7 +120,7 @@ def frankTestLedge(own, cont, hit_object, CORRECTION_RAY):
 	for hit_new, y_axis_new, nor_new in AXIS:
 		
 		# Set the 2D length of this vector to Y_OFFSET
-		y_axis_new = Vector(y_axis_new[0],y_axis_new[1])
+		y_axis_new = Vector([y_axis_new[0],y_axis_new[1]])
 		y_axis_new.length = Y_OFFSET
 		
 		# Now cast a new ray down too see the Z posuition of the ledge above us

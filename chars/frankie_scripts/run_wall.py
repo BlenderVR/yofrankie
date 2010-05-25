@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -23,7 +24,7 @@ either run allongside the wall or reflect off it.
 '''
 import GameLogic
 
-from Mathutils import Vector, Matrix, RotationMatrix, AngleBetweenVecs
+from mathutils import Vector, Matrix, RotationMatrix
 
 def main(cont):
 	own = cont.owner

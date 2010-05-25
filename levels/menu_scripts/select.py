@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -27,7 +28,7 @@ from keys, mouse and joystick.
 
 import GameLogic
 
-ITEM_PREFIX = 'OBitem_'
+ITEM_PREFIX = 'item_'
 
 def menu_items(sce):
 	'''
@@ -105,7 +106,7 @@ def menu_activate(cont, own, item_ob, items):
 		except:	pass
 		
 		if target_name:
-			globalDict['PORTAL_OBNAME'] = 'OB' + target_name
+			globalDict['PORTAL_OBNAME'] = target_name
 		
 		if scene_name:
 			globalDict['PORTAL_SCENENAME'] = scene_name
@@ -131,7 +132,7 @@ def menu_activate(cont, own, item_ob, items):
 		except:	pass
 		
 		if target_name:
-			globalDict['PORTAL_OBNAME'] = 'OB' + target_name
+			globalDict['PORTAL_OBNAME'] = target_name
 		
 		cont.activate(set_scene_actu)
 	else:

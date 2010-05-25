@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ##### BEGIN GPL LICENSE BLOCK #####
 #
 #  This program is free software; you can redistribute it and/or
@@ -22,7 +23,8 @@ Play an actuator randomly
 this runs in its own state and is disabled when frankie does anything
 '''
 import GameLogic
-from Mathutils import Rand
+import random
+
 def main(cont):
 	own = cont.owner
 	
@@ -33,7 +35,7 @@ def main(cont):
 	
 	actu_list = cont.actuators
 	
-	i = int(Rand(0,1) * len(actu_list))
+	i = random.randint(0, len(actu_list)-1)
 	
 	if i >= len(actu_list):
 		i = len(actu_list) - 1 # unlikely but possible?
