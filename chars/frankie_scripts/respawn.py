@@ -22,7 +22,7 @@
 This script restores frankie to his original location
 restores properties and updates the hud.
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own = cont.owner
@@ -42,14 +42,14 @@ def main(cont):
 	own.localPosition = [float(num) for num in own['orig_pos'].split()]
 	own.setLinearVelocity((0.0, 0.0, 0.0), True)
 	
-	props = GameLogic.globalDict['PROP_BACKUP'][own['id']]
+	props = logic.globalDict['PROP_BACKUP'][own['id']]
 	
 	# We backed these up, see frank_init
 	for prop, value in props.items():
 		own[prop] = value
 	
 	# Update the HUD
-	hud_dict = GameLogic.globalDict['HUD']
+	hud_dict = logic.globalDict['HUD']
 	if own['id'] == 0:	hud_dict['life_p1'] = own['life']
 	else:				hud_dict['life_p2'] = own['life']
 	

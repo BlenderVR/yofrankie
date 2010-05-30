@@ -23,11 +23,11 @@
 # ledge_hang.py -		To keep us attached to the edge
 
 # Since we cant import modules in the blenderplayer assign to 
-# GameLogic.frankTestLedge = frankTestLedge
+# logic.frankTestLedge = frankTestLedge
 # import debug
 # reload(debug)
 
-import GameLogic, mathutils
+from bge import logic
 from mathutils import Vector
 
 CLIMB_HANG_Y_OFFSET = -0.25

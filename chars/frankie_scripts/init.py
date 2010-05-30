@@ -34,15 +34,15 @@ This also uses the configuration to set the GLSL detail options
 # When startng the game from the menu this is not needed.
 
 # Setup default configuration options
-import GameKeys
-import GameLogic
-import GameTypes
+from bge import events
+from bge import logic
+from bge import types
 
 def main(cont):
 	
 	def main_defaults():
-		try:	conf = GameLogic.globalDict['CONFIG']
-		except:	conf = GameLogic.globalDict['CONFIG'] = {}
+		try:	conf = logic.globalDict['CONFIG']
+		except:	conf = logic.globalDict['CONFIG'] = {}
 
 		def confdef(opt, value):
 			if opt not in conf:
@@ -55,26 +55,26 @@ def main(cont):
 		# Keys
 		
 		# P1
-		confdef('KEY_UP_P1', GameKeys.UPARROWKEY)
-		confdef('KEY_DOWN_P1', GameKeys.DOWNARROWKEY)
-		confdef('KEY_LEFT_P1', GameKeys.LEFTARROWKEY)
-		confdef('KEY_RIGHT_P1', GameKeys.RIGHTARROWKEY) 
+		confdef('KEY_UP_P1', events.UPARROWKEY)
+		confdef('KEY_DOWN_P1', events.DOWNARROWKEY)
+		confdef('KEY_LEFT_P1', events.LEFTARROWKEY)
+		confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY) 
 		
 		# P2
-		confdef('KEY_UP_P2', GameKeys.WKEY) 
-		confdef('KEY_DOWN_P2', GameKeys.SKEY)
-		confdef('KEY_LEFT_P2', GameKeys.AKEY)
-		confdef('KEY_RIGHT_P2', GameKeys.DKEY) 
+		confdef('KEY_UP_P2', events.WKEY) 
+		confdef('KEY_DOWN_P2', events.SKEY)
+		confdef('KEY_LEFT_P2', events.AKEY)
+		confdef('KEY_RIGHT_P2', events.DKEY) 
 		
 		# P1
-		confdef('KEY_JUMP_P1', GameKeys.MKEY) 
-		confdef('KEY_THROW_P1', GameKeys.SPACEKEY) 
-		confdef('KEY_ACTION_P1', GameKeys.NKEY) 
+		confdef('KEY_JUMP_P1', events.MKEY) 
+		confdef('KEY_THROW_P1', events.SPACEKEY) 
+		confdef('KEY_ACTION_P1', events.NKEY) 
 		
 		# P2
-		confdef('KEY_JUMP_P2', GameKeys.GKEY)
-		confdef('KEY_THROW_P2', GameKeys.JKEY)
-		confdef('KEY_ACTION_P2', GameKeys.HKEY)
+		confdef('KEY_JUMP_P2', events.GKEY)
+		confdef('KEY_THROW_P2', events.JKEY)
+		confdef('KEY_ACTION_P2', events.HKEY)
 		
 	main_defaults()
 	# ---------------------
@@ -84,9 +84,9 @@ def main(cont):
 
 
 
-	globalDict = GameLogic.globalDict
+	globalDict = logic.globalDict
 
-	try:	conf = GameLogic.globalDict['CONFIG']
+	try:	conf = logic.globalDict['CONFIG']
 	except:	conf = None
 
 	print('\n\nCONF!!!')
@@ -114,10 +114,10 @@ def main(cont):
 	print('frank_init: ID:', ID)
 
 	def setPlayers():
-		import Rasterizer
+		from bge import render
 		
 		# menu leaves mouse on
-		if ID==0: Rasterizer.showMouse(False)
+		if ID==0: render.showMouse(False)
 		
 		playcount = conf['PLAYER_COUNT']
 		
@@ -141,8 +141,8 @@ def main(cont):
 			# Split screen
 			own_camera.useViewport = True
 			
-			w = Rasterizer.getWindowWidth()
-			h = Rasterizer.getWindowHeight()
+			w = render.getWindowWidth()
+			h = render.getWindowHeight()
 			if ID == 0:
 				# Vert
 				#own_camera.setViewport(0, h/2, w, h) 
@@ -160,8 +160,8 @@ def main(cont):
 		return True
 
 	def setHUD():
-		try:	hud_dict = GameLogic.globalDict['HUD']
-		except:	hud_dict = GameLogic.globalDict['HUD'] = {}
+		try:	hud_dict = logic.globalDict['HUD']
+		except:	hud_dict = logic.globalDict['HUD'] = {}
 		
 		hud_dict['life_p%d' % (ID+1)] = own_player['life'] # will be life_p1 or life_p2
 		hud_dict['bonecount_p%d' % (ID+1)] = 0 # will be life_p1 or life_p2
@@ -179,13 +179,11 @@ def main(cont):
 		
 
 	def setKeys():
-		import GameKeys
-		
 		# First see if we have a valid joystick
 		sensors = cont.sensors
 		# print(len(sensors), 'sensors')
-		joySensors = [s for s in sensors if type(s) == GameTypes.SCA_JoystickSensor]
-		keySensors = [s for s in sensors if type(s) == GameTypes.SCA_KeyboardSensor]
+		joySensors = [s for s in sensors if type(s) == types.SCA_JoystickSensor]
+		keySensors = [s for s in sensors if type(s) == types.SCA_KeyboardSensor]
 		
 		own_joy = joySensors[0].owner
 		own_kb = keySensors[0].owner
@@ -222,28 +220,28 @@ def main(cont):
 		if ID==0:
 			# For second player only now
 			KEY_MAPPING = {\
-			GameKeys.UPARROWKEY : conf['KEY_UP_P1'],\
-			GameKeys.LEFTARROWKEY : conf['KEY_LEFT_P1'],\
-			GameKeys.DOWNARROWKEY : conf['KEY_DOWN_P1'],\
-			GameKeys.RIGHTARROWKEY : conf['KEY_RIGHT_P1'],\
-			GameKeys.NKEY : conf['KEY_ACTION_P1'],\
-			GameKeys.MKEY : conf['KEY_JUMP_P1'],\
-			GameKeys.SPACEKEY : conf['KEY_THROW_P1'],\
+			events.UPARROWKEY : conf['KEY_UP_P1'],\
+			events.LEFTARROWKEY : conf['KEY_LEFT_P1'],\
+			events.DOWNARROWKEY : conf['KEY_DOWN_P1'],\
+			events.RIGHTARROWKEY : conf['KEY_RIGHT_P1'],\
+			events.NKEY : conf['KEY_ACTION_P1'],\
+			events.MKEY : conf['KEY_JUMP_P1'],\
+			events.SPACEKEY : conf['KEY_THROW_P1'],\
 			}
 		elif ID==1:
 			KEY_MAPPING = {\
-			GameKeys.UPARROWKEY : conf['KEY_UP_P2'],\
-			GameKeys.LEFTARROWKEY : conf['KEY_LEFT_P2'],\
-			GameKeys.DOWNARROWKEY : conf['KEY_DOWN_P2'],\
-			GameKeys.RIGHTARROWKEY : conf['KEY_RIGHT_P2'],\
-			GameKeys.NKEY : conf['KEY_ACTION_P2'],\
-			GameKeys.MKEY : conf['KEY_JUMP_P2'],\
-			GameKeys.SPACEKEY : conf['KEY_THROW_P2'],\
+			events.UPARROWKEY : conf['KEY_UP_P2'],\
+			events.LEFTARROWKEY : conf['KEY_LEFT_P2'],\
+			events.DOWNARROWKEY : conf['KEY_DOWN_P2'],\
+			events.RIGHTARROWKEY : conf['KEY_RIGHT_P2'],\
+			events.NKEY : conf['KEY_ACTION_P2'],\
+			events.MKEY : conf['KEY_JUMP_P2'],\
+			events.SPACEKEY : conf['KEY_THROW_P2'],\
 			}
 		
 		if KEY_MAPPING:	
 			for sens in cont.sensors:
-				if type(sens) == GameTypes.SCA_KeyboardSensor:
+				if type(sens) == types.SCA_KeyboardSensor:
 					sens.key = KEY_MAPPING[sens.key]
 		else:
 			print('Cannot map keys for player ID', ID)
@@ -265,7 +263,7 @@ def main(cont):
 		# This may run when entering a new scene, we may be entering from a portal
 		# 2nd players are placed higher, make sure portal enteries have enough room above
 		
-		sce = GameLogic.getCurrentScene()
+		sce = logic.getCurrentScene()
 		
 		try:	scene_name = globalDict['PORTAL_SCENENAME']
 		except:	scene_name = ''
@@ -294,20 +292,20 @@ def main(cont):
 		own_player.localPosition = pos
 		own_player.localOrientation = target_ob.worldOrientation
 		
-		# Keep GameLogic.PORTAL_OBNAME incase there are more players
+		# Keep logic.PORTAL_OBNAME incase there are more players
 		
 		
 		# Annoying, the 'Loading Text', needs to be turned off if we're only 
-		for sce in GameLogic.getSceneList():
+		for sce in logic.getSceneList():
 			if sce.name == 'hud':
-				ob = sce.objects.get('OBloading')
+				ob = sce.objects.get('loading')
 				if ob:
 					ob.visible = False
 					
 					
 
 	def setGfxQuality():
-		import Rasterizer
+		from bge import render
 		# return
 		# Only to this once
 		if ID != 0:
@@ -315,32 +313,32 @@ def main(cont):
 		
 		
 		
-		conf = GameLogic.globalDict['CONFIG']
+		conf = logic.globalDict['CONFIG']
 		
 		if conf['GRAPHICS_DETAIL'] == 0:
 			print("\tconfig: setting deytail low")
-			Rasterizer.setGLSLMaterialSetting("lights", 1)
-			Rasterizer.setGLSLMaterialSetting("shaders", 0)
-			Rasterizer.setGLSLMaterialSetting("shadows", 0)
-			Rasterizer.setGLSLMaterialSetting("ramps", 0)
-			Rasterizer.setGLSLMaterialSetting("nodes", 0)
-			Rasterizer.setGLSLMaterialSetting("extra_textures", 1)
+			render.setGLSLMaterialSetting("lights", 1)
+			render.setGLSLMaterialSetting("shaders", 0)
+			render.setGLSLMaterialSetting("shadows", 0)
+			render.setGLSLMaterialSetting("ramps", 0)
+			render.setGLSLMaterialSetting("nodes", 0)
+			render.setGLSLMaterialSetting("extra_textures", 1)
 		elif conf['GRAPHICS_DETAIL'] == 1:
 			print("\tconfig: setting deytail med")
-			Rasterizer.setGLSLMaterialSetting("lights", 1)
-			Rasterizer.setGLSLMaterialSetting("shaders", 0)
-			Rasterizer.setGLSLMaterialSetting("shadows", 0)
-			Rasterizer.setGLSLMaterialSetting("ramps", 1)
-			Rasterizer.setGLSLMaterialSetting("nodes", 0)
-			Rasterizer.setGLSLMaterialSetting("extra_textures", 1)
+			render.setGLSLMaterialSetting("lights", 1)
+			render.setGLSLMaterialSetting("shaders", 0)
+			render.setGLSLMaterialSetting("shadows", 0)
+			render.setGLSLMaterialSetting("ramps", 1)
+			render.setGLSLMaterialSetting("nodes", 0)
+			render.setGLSLMaterialSetting("extra_textures", 1)
 		else: # high quality
 			print("\tconfig: setting deytail high")
-			Rasterizer.setGLSLMaterialSetting("lights", 1)
-			Rasterizer.setGLSLMaterialSetting("shaders", 1)
-			Rasterizer.setGLSLMaterialSetting("shadows", 1)
-			Rasterizer.setGLSLMaterialSetting("ramps", 1)
-			Rasterizer.setGLSLMaterialSetting("nodes", 1)
-			Rasterizer.setGLSLMaterialSetting("extra_textures", 1)
+			render.setGLSLMaterialSetting("lights", 1)
+			render.setGLSLMaterialSetting("shaders", 1)
+			render.setGLSLMaterialSetting("shadows", 1)
+			render.setGLSLMaterialSetting("ramps", 1)
+			render.setGLSLMaterialSetting("nodes", 1)
+			render.setGLSLMaterialSetting("extra_textures", 1)
 		
 	
 	def setup_player():
@@ -361,7 +359,7 @@ def main(cont):
 		setKeys()
 		setPortal() # If we have a portal
 		backupPosition() # MUST run before backing up props
-		backupProps() # backup changes to GameLogic dict
+		backupProps() # backup changes to logic dict
 		
 		setGfxQuality()
 	

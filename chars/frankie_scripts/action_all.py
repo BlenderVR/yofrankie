@@ -30,8 +30,8 @@ for instance - when throwing, you dont want the object to be thrown right away.
 
 Once the action is done the "action_name" property is cleared so other actions can be done.
 '''
-import GameLogic
-import GameTypes
+from bge import logic
+from bge import types
 from mathutils import Vector
 
 
@@ -432,7 +432,7 @@ def main(cont):
 		own['action_done'] = 0
 			
 		for actu in cont.actuators:
-			if type(actu) == GameTypes.BL_ActionActuator:
+			if type(actu) == types.BL_ActionActuator:
 				actu.frame = actu.frameStart
 				cont.deactivate(actu)
 		

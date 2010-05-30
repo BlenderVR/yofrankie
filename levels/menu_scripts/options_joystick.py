@@ -22,7 +22,7 @@
 Detect if we have any joysticks and
 remove the keyconfig objects if we have them plugged in
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own = cont.owner

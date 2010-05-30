@@ -22,7 +22,7 @@
 Detect if we have any joysticks and set a message
 for the main menu
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own = cont.owner

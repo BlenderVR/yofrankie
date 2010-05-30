@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 # This file has almost an exact copy in frank.blend - frank_projectile_hit
 def main(cont):
@@ -36,7 +36,7 @@ def main(cont):
 				if s > PROJECTILE_SPEED:
 					if 'kill' in hit_ob:
 						own['hit'] = max(hit_ob['kill'], own['hit'])
-						GameLogic.bonecount+=hit_ob['kill'] #add the amount of health lost to the 'total broken bones' counter
+						logic.bonecount+=hit_ob['kill'] #add the amount of health lost to the 'total broken bones' counter
 					else:
 						own['hit'] = max(1, own['hit'])
 			elif 'kill' in hit_ob:

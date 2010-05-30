@@ -24,7 +24,7 @@ This script checks for conditions where this is ok and changes the state.
 
 It also clamps the fall speed and detects when he is going to land so it can play the animation
 '''
-import GameLogic
+from bge import logic
 
 from mathutils import Vector
 

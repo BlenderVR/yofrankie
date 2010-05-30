@@ -23,7 +23,7 @@ its a pitty we need this script at all, but knowing if we are on the ground or n
 basically use ray and collision sensors to detect of we are on the ground, keeping the "grounded" property up to date
 there may be a better way to do this, like use second collision object at frankies feet- but for now this is OK.
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own = cont.owner

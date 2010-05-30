@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 def update_hud(cont, own):
 	
@@ -27,7 +27,7 @@ def update_hud(cont, own):
 		return
 	
 	# Get the hitlist for this player
-	try:	hitlist = GameLogic.globalDict['HUD']['hitlist_p%d' % (projectile_id+1)]
+	try:	hitlist = logic.globalDict['HUD']['hitlist_p%d' % (projectile_id+1)]
 	except:	return # Not initialized yet.... ignore for a couble of redraws
 	
 	id = own['id']

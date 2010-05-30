@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own=cont.owner
@@ -30,7 +30,7 @@ def main(cont):
 	# checking for a zero length list is not helpful
 	# if we get one, just update both chars
 	
-	hud_dict = GameLogic.globalDict['HUD']
+	hud_dict = logic.globalDict['HUD']
 	
 	actus = [(s.name, s) for s in cont.actuators]
 	actus.sort()
@@ -40,7 +40,7 @@ def main(cont):
 	## print('\thud: messages for predator ids are:', messages_player_ids)
 	
 	if messages_player_ids == None or '-1' in messages_player_ids or len(messages_player_ids) == 0:
-		if GameLogic.globalDict['CONFIG']['PLAYER_COUNT'] == 1:
+		if logic.globalDict['CONFIG']['PLAYER_COUNT'] == 1:
 			messages_player_ids = ['0']
 		else:
 			messages_player_ids = ['0', '1']

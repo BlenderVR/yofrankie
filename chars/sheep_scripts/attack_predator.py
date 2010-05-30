@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 HIT_MAXDIST = 0.8
 

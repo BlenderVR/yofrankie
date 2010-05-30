@@ -22,7 +22,7 @@
 When falling and colliding with an object with the "bounce"
 property, you will bounce back up. If youre pressing jump youll bounce higher.
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	# BOUNCE_FALL_SPEED = 0.0

@@ -22,17 +22,17 @@
 Take options from the dict and set the scene up from these.
 '''
 
-import GameKeys
-import GameLogic
+from bge import events
+from bge import logic
 
 ITEM_PREFIX = 'item_'
 
 def main():
 	# print('Setting scene properties from python configuration dictionary')
-	# print('using dictionary - GameLogic.globalDict["CONFIG"]')
+	# print('using dictionary - logic.globalDict["CONFIG"]')
 	
-	conf = GameLogic.globalDict['CONFIG']
-	sce = GameLogic.getCurrentScene()
+	conf = logic.globalDict['CONFIG']
+	sce = logic.getCurrentScene()
 	
 	
 	# ***************************
@@ -63,7 +63,7 @@ def main():
 		conf_key = ob['conf_key']
 		
 		if conf_key not in conf:
-			print('\tMenu error - item:', ob.name, 'uses conf_key:', conf_key, 'not found in GameLogic.globalDict["CONFIG"], ignoring')
+			print('\tMenu error - item:', ob.name, 'uses conf_key:', conf_key, 'not found in logic.globalDict["CONFIG"], ignoring')
 			continue
 		
 		if 'radio' in ob:
@@ -110,7 +110,7 @@ def main():
 	def confKeyObSet(opt):
 		try:	ob=	key_mapping[opt]
 		except: ob = None
-		if ob:		ob['Text'] = GameKeys.EventToString(conf[opt]).replace('ARROW', '').replace('KEY', '').lower()
+		if ob:		ob['Text'] = events.EventToString(conf[opt]).replace('ARROW', '').replace('KEY', '').lower()
 		else:		print('no object found for', opt)
 	
 	keys = [

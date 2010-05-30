@@ -21,10 +21,12 @@
 '''
 Similar to respawning, restore most properties and move back to a previous position
 '''
-import GameLogic
+
+from bge import logic
+
 def restoreProps(own):
 	# We could reset others but these are likely to cause problems
-	PROPS = GameLogic.globalDict['PROP_BACKUP'][own['id']]
+	PROPS = logic.globalDict['PROP_BACKUP'][own['id']]
 	# We backed these up, see frank_init
 	# Only backup "life" and inventory -> "item_*"
 	

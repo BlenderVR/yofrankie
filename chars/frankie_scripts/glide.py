@@ -21,7 +21,7 @@
 '''
 This script controlls frankies gliding angle, speed etc
 '''
-import GameLogic
+from bge import logic
 from mathutils import Vector
 
 TIME_OFFSET = 1000.0

@@ -20,7 +20,7 @@
 
 # Detect collision with pickup and act on this
 
-import GameLogic
+from bge import logic
 
 def main(cont):
 	
@@ -56,7 +56,7 @@ def main(cont):
 			else:
 				own['life'] = own['life_max']
 				
-			GameLogic.frankhealth = own['life']
+			logic.frankhealth = own['life']
 			cont.activate('pickup_flash_life')
 			cont.activate('send_healthchange')
 			DONE_PICKUP = LIFE_PICKUP = True
@@ -93,7 +93,7 @@ def main(cont):
 			cont.activate('pickup_anim')
 		if LIFE_PICKUP:
 			cont.activate('sfx_life_pickup')
-			hud_dict = GameLogic.globalDict['HUD']
+			hud_dict = logic.globalDict['HUD']
 			if own['id'] == 0:	hud_dict['life_p1'] = own['life']
 			else:				hud_dict['life_p2'] = own['life']
 			cont.activate('send_healthchange')

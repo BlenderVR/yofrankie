@@ -24,20 +24,20 @@
 # this needs to be done because groups cant be moved once added by addObject actuators.
 
 # Warning, this module must be reloaded between scenes of the objects will become invalid
-import GameLogic
+from bge import logic
 
 SPLASH_LS = [None, None, None, None]
 
 def splash_init():
-	sce = GameLogic.getCurrentScene()
+	sce = logic.getCurrentScene()
 	SPLASH_LS[0] = sce
-	try:		SPLASH_LS[1] = sce.objectsInactive['OBfx_splash']
+	try:		SPLASH_LS[1] = sce.objectsInactive['fx_splash']
 	except:	SPLASH_LS[1] = None
 	
-	try:		SPLASH_LS[2] = sce.objectsInactive['OBfx_splash_small']
+	try:		SPLASH_LS[2] = sce.objectsInactive['fx_splash_small']
 	except:	SPLASH_LS[2] = None
 	
-	try:		SPLASH_LS[3] = sce.objectsInactive['OBfx_lava_splash']
+	try:		SPLASH_LS[3] = sce.objectsInactive['fx_lava_splash']
 	except:	SPLASH_LS[3] = None
 
 def main(cont):

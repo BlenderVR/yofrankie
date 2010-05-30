@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 import mathutils
 from mathutils import Vector, RotationMatrix
 
@@ -30,17 +30,17 @@ def main(cont):
 	own = cont.owner
 	own_pos = Vector(own.worldPosition)
 	
-	sce = GameLogic.getCurrentScene()
+	sce = logic.getCurrentScene()
 	#for ob in sce.objects:
 	#	print(ob.name)
 	
 	actu_add_object = cont.actuators['add_dyn_portal']
 	
 	# Incase we are called from the main menu
-	blendFiles = GameLogic.getBlendFileList('//')
-	blendFiles += GameLogic.getBlendFileList('//levels')
-	blendFiles += GameLogic.getBlendFileList('//../levels')
-	blendFiles += GameLogic.getBlendFileList('//../../../levels')
+	blendFiles = logic.getBlendFileList('//')
+	blendFiles += logic.getBlendFileList('//levels')
+	blendFiles += logic.getBlendFileList('//../levels')
+	blendFiles += logic.getBlendFileList('//../../../levels')
 	
 	# Remove doubles
 	# blendFiles	= list(set(blendFiles)) # breaks py2.3
@@ -85,7 +85,7 @@ def main(cont):
 		ang = 360 * (i/totFiles)
 		# print(i,f,ang)
 		mat = RotationMatrix(ang, 3, 'Z')
-		pos_xy = list((start * mat) + own_pos)  # rotate and center around the gamelogic object
+		pos_xy = list((start * mat) + own_pos)  # rotate and center around the logic object
 		
 		ray_down = pos_xy[:]
 		ray_down[2] -= 1.0
@@ -121,6 +121,6 @@ def main(cont):
 		
 	
 	# Since we use instantAddObject(), there is no need to activate the actuator
-	# GameLogic.addActiveActuator(actu_add_object, 1)
+	# logic.addActiveActuator(actu_add_object, 1)
 	
 	own.endObject() # may as well distroy, wont use anymore

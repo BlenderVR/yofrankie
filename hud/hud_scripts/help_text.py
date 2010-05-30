@@ -22,14 +22,14 @@
 sets the key text for the help screen
 '''
 
-import GameKeys
-import GameLogic
+from bge import events
+from bge import logic
 
 def main(cont):
 	own = cont.owner
 	
-	try:	conf = GameLogic.globalDict['CONFIG']
-	except:	conf = GameLogic.globalDict['CONFIG'] = {}
+	try:	conf = logic.globalDict['CONFIG']
+	except:	conf = logic.globalDict['CONFIG'] = {}
 	
 	children = [(ob.name, ob) for ob in own.children]
 	children.sort()
@@ -77,7 +77,7 @@ def main(cont):
 			for key, value in keys:
 				# KEY_UP_P1 -> up
 				name = key.split('_')[1].lower()
-				val = GameKeys.EventToString(value).replace('KEY', '').lower()
+				val = events.EventToString(value).replace('KEY', '').lower()
 				text.append('%s - %s' % (name, val))
 		
 		for i, line in enumerate(text):

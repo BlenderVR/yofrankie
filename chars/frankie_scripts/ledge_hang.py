@@ -19,7 +19,7 @@
 
 
 # import frank_ledge_module
-import GameLogic
+from bge import logic
 from mathutils import Vector, Matrix, RotationMatrix
 from ledge_test import frankTestLedge, CLIMB_HANG_Y_OFFSET, CLIMB_HANG_Z_OFFSET
 

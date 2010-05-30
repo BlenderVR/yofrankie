@@ -18,14 +18,14 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 def main(cont):
 	# Give the sheep a unique ID
 	try:
-		ID = GameLogic.ID = GameLogic.ID + 1
+		ID = logic.ID = logic.ID + 1
 	except:
-		ID = GameLogic.ID = 0
+		ID = logic.ID = 0
 	
 	own = cont.owner
 	# For respawning.

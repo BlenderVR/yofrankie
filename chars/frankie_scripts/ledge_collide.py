@@ -26,7 +26,7 @@ If he can grab it, move to the grab state.
 
 Most of the logic here is in "ledge_test.frankTestLedge"
 '''
-import GameLogic
+from bge import logic
 import mathutils
 from ledge_test import frankTestLedge
 

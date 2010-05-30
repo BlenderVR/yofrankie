@@ -26,7 +26,7 @@ This script runs on an empty object and recieves input
 from keys, mouse and joystick.
 '''
 
-import GameLogic
+from bge import logic
 
 ITEM_PREFIX = 'item_'
 
@@ -73,7 +73,7 @@ def menu_activate(cont, own, item_ob, items):
 	see frank.blend -> frank_portal text for similar script
 	'''
 	
-	globalDict = GameLogic.globalDict
+	globalDict = logic.globalDict
 	portal_ob = item_ob # just so we can use copied script 
 	
 		
@@ -116,11 +116,11 @@ def menu_activate(cont, own, item_ob, items):
 		'''
 		SPECIAL CASE - Set GLSL 
 		'''
-		import Rasterizer
-		if GameLogic.globalDict['CONFIG']['GRAPHICS_GLSL']:
-			Rasterizer.setMaterialMode(2) # use GLSL textures
+		from bge import render
+		if logic.globalDict['CONFIG']['GRAPHICS_GLSL']:
+			render.setMaterialMode(2) # use GLSL textures
 		else:
-			Rasterizer.setMaterialMode(0) # texface
+			render.setMaterialMode(0) # texface
 		
 		
 	elif scene_name:
@@ -138,7 +138,7 @@ def menu_activate(cont, own, item_ob, items):
 	else:
 		# Not a portal
 				
-		conf = GameLogic.globalDict['CONFIG']
+		conf = logic.globalDict['CONFIG']
 		
 		if 'trigger' in item_ob:
 			# This should have its own logic thats activated on trigger.
@@ -171,7 +171,7 @@ def main(cont):
 	Take user input and change the active menu or select an item.
 	'''
 	own = cont.owner
-	sce = GameLogic.getCurrentScene()
+	sce = logic.getCurrentScene()
 	
 	items = menu_items(sce)
 	

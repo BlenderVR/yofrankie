@@ -21,7 +21,7 @@
 '''
 Run when a carry object hits us and attach it to our hand if all is right (and the moons are aligned)
 '''
-import GameLogic
+from bge import logic
 from mathutils import Matrix
 
 # We use this a lot, just to be neat

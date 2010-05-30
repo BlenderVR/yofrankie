@@ -26,11 +26,11 @@ possible targets are object, scene or blendfile (or a mix)
 When loading scenes or blendfiles, "frank_init" scripts check for the portal settings and finish off the positioning.
 '''
 
-import GameLogic
+from bge import logic
 
 def backupProps(own):
 	# We could reset others but these are likely to cause problems
-	PROPS = GameLogic.globalDict['PROP_BACKUP'][own['id']]
+	PROPS = logic.globalDict['PROP_BACKUP'][own['id']]
 	# We backed these up, see frank_init
 	# Only backup "life" and inventory -> "item_*"
 	PROPS['life'] = own['life']
@@ -42,14 +42,14 @@ def backupProps(own):
 def main(cont):
 	
 	own = cont.owner
-	globalDict = GameLogic.globalDict
+	globalDict = logic.globalDict
 	
 	portal_ob = cont.sensors['portal_touch'].hitObject
 	
 	if not portal_ob:
 		return
 	
-	sce = GameLogic.getCurrentScene()
+	sce = logic.getCurrentScene()
 	target_name = portal_ob['portal']
 	
 	# incase the portal was set before
@@ -67,7 +67,7 @@ def main(cont):
 	# A bit dodgy, for the first logic tick show the loading text only
 	# portal collision must be on pulse so its gets a second tick and runs the portal code below.
 	if blend_name or scene_name:
-		for sce in GameLogic.getSceneList():
+		for sce in logic.getSceneList():
 			if sce.name == 'hud':
 				loading_ob = sce.objects['loading']
 				if not loading_ob.visible:

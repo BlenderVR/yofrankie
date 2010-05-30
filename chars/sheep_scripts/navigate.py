@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 # Hit a Kill Object? How much and reset the time.
 
@@ -26,14 +26,14 @@ import random
 from mathutils import Vector, Matrix, RotationMatrix
 
 '''
-import GameLogic as g
+from bge import logic as g
 def setpos(pos):
 	try:
 		ob_debug = g.DEBUG_OB
 	except:
 		s = g.getCurrentScene()
 		for ob in s.objects:
-			if ob.name =='OBdebug':
+			if ob.name =='debug':
 				ob_debug = ob
 				break
 	
@@ -62,7 +62,7 @@ def reset_target(own, cont, own_pos, predator_ob):
 	
 	own['target_time'] = 0.0
 	
-	L = TARGET_DIST_MIN + (random.random() * (TARGET_DIST_MAX-TARGET_DIST_MIN))
+	L = random.uniform(TARGET_DIST_MIN, TARGET_DIST_MAX)
 
 	own_front= own.getAxisVect((0.0, L, 0.0))
 	
@@ -115,8 +115,8 @@ def reset_target(own, cont, own_pos, predator_ob):
 			new_dir.z = 0.0
 			new_dir.length = L
 			
-			# new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'z')
-			ang = (random.random()*45) - (45/2.0)
+			# new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
+			ang = random.uniform(-22.5, 22.5)
 			new_dir = new_dir * RotationMatrix(ang, 3, 'Z')
 			
 			own['target_x'] = new_dir.x + own_pos[0]
@@ -125,7 +125,7 @@ def reset_target(own, cont, own_pos, predator_ob):
 	else:
 		### print('RANDOM')
 		# Random target
-		ang = 90 + (random.random()*180)
+		ang = random.uniform(90, 270)
 		new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
 			
 		own['target_x'] = new_dir.x + own_pos[0]

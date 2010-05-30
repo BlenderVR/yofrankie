@@ -23,7 +23,7 @@
 Run when we touch a kill or projectile object,
 this sets own.hit which the 'frank_health' script then deals with.
 '''
-import GameLogic
+from bge import logic
 
 def main(cont):
 	PROJECTILE_SPEED = 5.0

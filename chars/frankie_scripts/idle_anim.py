@@ -22,7 +22,7 @@
 Play an actuator randomly
 this runs in its own state and is disabled when frankie does anything
 '''
-import GameLogic
+from bge import logic
 import random
 
 def main(cont):

@@ -20,14 +20,14 @@
 
 '''
 Setup default configuration options
-use GameLogic.globalDict which is stored between loading blend files
+use logic.globalDict which is stored between loading blend files
 '''
-import GameKeys
-import GameLogic
+from bge import events
+from bge import logic
 
 def main():
-	try:	conf = GameLogic.globalDict['CONFIG']
-	except:	conf = GameLogic.globalDict['CONFIG'] = {}
+	try:	conf = logic.globalDict['CONFIG']
+	except:	conf = logic.globalDict['CONFIG'] = {}
 
 	def confdef(opt, value):
 		if opt not in conf:
@@ -40,27 +40,27 @@ def main():
 	# Keys
 	
 	# P1
-	confdef('KEY_UP_P1', GameKeys.UPARROWKEY)
-	confdef('KEY_DOWN_P1', GameKeys.DOWNARROWKEY)
-	confdef('KEY_LEFT_P1', GameKeys.LEFTARROWKEY)
-	confdef('KEY_RIGHT_P1', GameKeys.RIGHTARROWKEY) 
+	confdef('KEY_UP_P1', events.UPARROWKEY)
+	confdef('KEY_DOWN_P1', events.DOWNARROWKEY)
+	confdef('KEY_LEFT_P1', events.LEFTARROWKEY)
+	confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY) 
 	
 	# P2
-	confdef('KEY_UP_P2', GameKeys.WKEY) 
-	confdef('KEY_DOWN_P2', GameKeys.SKEY)
-	confdef('KEY_LEFT_P2', GameKeys.AKEY)
-	confdef('KEY_RIGHT_P2', GameKeys.DKEY) 
+	confdef('KEY_UP_P2', events.WKEY) 
+	confdef('KEY_DOWN_P2', events.SKEY)
+	confdef('KEY_LEFT_P2', events.AKEY)
+	confdef('KEY_RIGHT_P2', events.DKEY) 
 	
 	# P1
-	confdef('KEY_JUMP_P1', GameKeys.MKEY) 
-	confdef('KEY_THROW_P1', GameKeys.SPACEKEY) 
-	confdef('KEY_ACTION_P1', GameKeys.NKEY) 
+	confdef('KEY_JUMP_P1', events.MKEY) 
+	confdef('KEY_THROW_P1', events.SPACEKEY) 
+	confdef('KEY_ACTION_P1', events.NKEY) 
 	
 	# P2
-	confdef('KEY_JUMP_P2', GameKeys.GKEY)
-	confdef('KEY_THROW_P2', GameKeys.JKEY)
-	confdef('KEY_ACTION_P2', GameKeys.HKEY)
+	confdef('KEY_JUMP_P2', events.GKEY)
+	confdef('KEY_THROW_P2', events.JKEY)
+	confdef('KEY_ACTION_P2', events.HKEY)
 	
 	# 
-	import Rasterizer
-	Rasterizer.showMouse(True)
+	from bge import render
+	render.showMouse(True)

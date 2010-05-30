@@ -18,11 +18,11 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import GameLogic
+from bge import logic
 
 def main(cont):
 	own = cont.owner
-	hud_dict = GameLogic.globalDict['HUD']
+	hud_dict = logic.globalDict['HUD']
 	
 	sens_msg = cont.sensors['health_change_msg']
 	

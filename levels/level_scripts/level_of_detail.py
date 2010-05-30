@@ -19,12 +19,12 @@
 
 
 # remove objects based on detail setting.
-import GameLogic
+from bge import logic
 def main(cont):
 	own = cont.owner
-	sce = GameLogic.getCurrentScene()
+	sce = logic.getCurrentScene()
 	
-	conf = GameLogic.globalDict.get('CONFIG', {})
+	conf = logic.globalDict.get('CONFIG', {})
 	detail = conf.get('GRAPHICS_DETAIL', 2)
 	
 	# detail is a pref, can be 0,1,2: 2 is high detail, dont do anything

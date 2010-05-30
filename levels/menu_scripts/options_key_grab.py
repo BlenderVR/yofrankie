@@ -25,12 +25,12 @@ This script runs all actuators when a key is pressed.
 The object name of the key sensor patches up with the key config name
 This way the key pressed is written to the configuration.
 '''
-import GameKeys
-import GameLogic
+from bge import events
+from bge import logic
 
 def main(cont):
 	# This is set in init_options
-	conf = GameLogic.globalDict['CONFIG']
+	conf = logic.globalDict['CONFIG']
 	
 	own = cont.owner
 	
@@ -63,7 +63,7 @@ def main(cont):
 	conf[conf_dict_key] = key_id
 	
 	# Display the name
-	own_display['Text'] = GameKeys.EventToString(key_id).replace('ARROW', '').replace('KEY', '').lower()
+	own_display['Text'] = events.EventToString(key_id).replace('ARROW', '').replace('KEY', '').lower()
 	
 	# Go to next state
 	for actu in cont.actuators:

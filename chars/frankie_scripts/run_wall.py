@@ -22,7 +22,7 @@
 Use this script when running into a wall with the "slip" property
 either run allongside the wall or reflect off it.
 '''
-import GameLogic
+from bge import logic
 
 from mathutils import Vector, Matrix, RotationMatrix
 
@@ -62,13 +62,13 @@ def main(cont):
 		own_neg_y = Vector(own.getAxisVect((0.0, -1.0, 0.0)))
 		own_neg_y.z = 0.0
 		
-		ang = AngleBetweenVecs(own_neg_y, wall_nor) 
+		ang = own_neg_y.angle(wall_nor) 
 		if ang > 22.5:
 			cross = wall_nor.cross(own_neg_y)
 			if cross.z > 0.0:
-				paralelle_dir = wall_nor * RotationMatrix(-90.0, 3, 'z')	
+				paralelle_dir = wall_nor * RotationMatrix(-90.0, 3, 'Z')	
 			else:
-				paralelle_dir = wall_nor * RotationMatrix(90.0, 3, 'z')	
+				paralelle_dir = wall_nor * RotationMatrix(90.0, 3, 'Z')	
 			
 			own.alignAxisToVect(paralelle_dir, 1, 0.1)
 			return
