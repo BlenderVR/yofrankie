@@ -23,7 +23,7 @@ BLENDER = blender
 PYTHON = python
 SVN = svn
 PACKAGE_DIR = ./package
-PREFIX = /usr/local
+PREFIX ?= /usr/local
 
 dist_dirs = \
 	audio \
