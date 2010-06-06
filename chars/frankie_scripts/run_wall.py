@@ -62,13 +62,15 @@ def main(cont):
 		own_neg_y = Vector(own.getAxisVect((0.0, -1.0, 0.0)))
 		own_neg_y.z = 0.0
 		
-		ang = own_neg_y.angle(wall_nor) 
-		if ang > 22.5:
+		ang = own_neg_y.angle(wall_nor)
+		# 22.5 deg = 0.39269908169872 rad
+		if ang > 0.39269908169872:
 			cross = wall_nor.cross(own_neg_y)
+			# 90 deg = 1.5707963267949 rad
 			if cross.z > 0.0:
-				paralelle_dir = wall_nor * RotationMatrix(-90.0, 3, 'Z')	
+				paralelle_dir = wall_nor * RotationMatrix(-1.5707963267949, 3, 'Z')	
 			else:
-				paralelle_dir = wall_nor * RotationMatrix(90.0, 3, 'Z')	
+				paralelle_dir = wall_nor * RotationMatrix(1.5707963267949, 3, 'Z')	
 			
 			own.alignAxisToVect(paralelle_dir, 1, 0.1)
 			return
@@ -87,7 +89,7 @@ def main(cont):
 			
 			# Nicer to reflect
 			wall_nor.normalize()
-			ref = own_neg_y.reflect(wall_nor)
+			ref = -(own_neg_y.reflect(wall_nor))
 			actu_motion.linV = (ref[0]*REBOUND_LINV, ref[1]*REBOUND_LINV, 0.0) # global linV
 			
 			cont.activate('run_wall')

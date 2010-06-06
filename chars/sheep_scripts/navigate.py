@@ -116,7 +116,8 @@ def reset_target(own, cont, own_pos, predator_ob):
 			new_dir.length = L
 			
 			# new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
-			ang = random.uniform(-22.5, 22.5)
+			# 22.5 deg = 0.39269908169872 rad
+			ang = random.uniform(-0.39269908169872, 0.39269908169872)
 			new_dir = new_dir * RotationMatrix(ang, 3, 'Z')
 			
 			own['target_x'] = new_dir.x + own_pos[0]
@@ -125,7 +126,8 @@ def reset_target(own, cont, own_pos, predator_ob):
 	else:
 		### print('RANDOM')
 		# Random target
-		ang = random.uniform(90, 270)
+		# 90 deg = 1.5707963267949 rad; 270 deg = 4.7123889803847 rad
+		ang = random.uniform(1.5707963267949, 4.7123889803847)
 		new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
 			
 		own['target_x'] = new_dir.x + own_pos[0]
@@ -182,7 +184,8 @@ def go_target(own, cont, own_pos, predator_ob, TARGET_TIME_LIMIT):
 	
 	# Angle test means we can check for a low angle
 	angle = angle_target(own, cont, own_pos)
-	if abs(angle) < 10:
+	# 10 deg = 0.17453292519943 rad
+	if abs(angle) < 0.17453292519943:
 		DIRECTION[0] = 0
 	elif angle < 0:
 		DIRECTION[0] = 2
@@ -376,8 +379,8 @@ def main(cont):
 		own['target_time'] = -TURN_TIME
 		
 	elif not sens_l_hitob or not sens_r_hitob:
-		
-		if abs(angle_target(own, cont, own_pos)) < 90 and own['target_time'] > TIME_LIMIT:
+		# 90 deg = 1.5707963267949 rad
+		if abs(angle_target(own, cont, own_pos)) < 1.5707963267949 and own['target_time'] > TIME_LIMIT:
 			reset_target(own, cont, own_pos, predator_ob)
 		go_target(own, cont, own_pos, predator_ob, TIME_LIMIT)
 		

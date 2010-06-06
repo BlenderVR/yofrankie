@@ -88,7 +88,7 @@ def main(cont):
 	
 	# Set Frankies distance from the hit position
 	
-	if ang > 0.1:
+	if ang > 0.0001:
 		if cross.z < 0:
 			ang = -ang
 		

@@ -82,7 +82,8 @@ def main(cont):
 	totFiles = float(totFiles)
 	# print('PLACING')
 	for i,f in enumerate(blendFiles):
-		ang = 360 * (i/totFiles)
+		# 2 * PI
+		ang = 6.2831853071796 * (i/totFiles)
 		# print(i,f,ang)
 		mat = RotationMatrix(ang, 3, 'Z')
 		pos_xy = list((start * mat) + own_pos)  # rotate and center around the logic object

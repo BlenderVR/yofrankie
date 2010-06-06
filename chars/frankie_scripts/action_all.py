@@ -178,7 +178,8 @@ def kick_raytest(cont, own):
 		Vector(own.getAxisVect((0.0, 1.0, 0.0))).angle( \
 		Vector(hit_ob.worldPosition) - Vector(own.worldPosition) )
 	
-	if ang > 33.0:	
+	# 33 deg = 0.57595865315813 rad
+	if ang > 0.57595865315813:
 		return None
 	
 	return hit_ob
