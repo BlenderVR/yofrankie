@@ -31,7 +31,7 @@ def dontCatch(cont):
 
 def do_catch(cont, own, ob_carry, ob_catch_bonechild):
 	
-	own_pos = own.worldPosition
+	own_pos = own.worldPosition.copy()
 		
 	'''
 	If we are ok to catch an object, this function runs on all catchable objects
@@ -46,7 +46,7 @@ def do_catch(cont, own, ob_carry, ob_catch_bonechild):
 		print('\tcant catch: alredy being carried by another')
 		return False
 	
-	ob_carry_pos = ob_carry.worldPosition
+	ob_carry_pos = ob_carry.worldPosition.copy()
 	
 	if ob_carry_pos[2] < own_pos[2]+0.1:
 		print('\tcant catch: catch objects Z position too low')
@@ -78,7 +78,7 @@ def do_catch(cont, own, ob_carry, ob_catch_bonechild):
 	# since it should be upside down
 	if ob_carry.get('type', '') == 'shp':
 		ob_catch_bonechild.alignAxisToVect(ob_carry.getAxisVect((0.0, 0.0,-1.0)), 2)
-		pos = ob_catch_bonechild.worldPosition
+		pos = ob_catch_bonechild.worldPosition.copy()
 	else:
 		# ob_catch_bonechild.alignAxisToVect(ob_carry.getAxisVect([0,1,0]), 2)
 		#pos = ob_catch_bonechild.worldPosition
@@ -87,7 +87,7 @@ def do_catch(cont, own, ob_carry, ob_catch_bonechild):
 		ob_catch_bonechild.alignAxisToVect(ob_carry.getAxisVect((0.0, 0.0, -1.0)), 2)
 		#ob_catch_bonechild.alignAxisToVect(ob_carry.getAxisVect([0,1,0]), 1)
 		ob_carry.alignAxisToVect(own.getAxisVect((0.0, -1.0, 0.0)), 1)
-		pos = ob_catch_bonechild.worldPosition
+		pos = ob_catch_bonechild.worldPosition.copy()
 		
 		# Only for carrying frankie
 		if 'predator' in ob_carry:

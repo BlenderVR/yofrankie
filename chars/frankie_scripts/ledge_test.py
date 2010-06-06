@@ -51,7 +51,7 @@ def frankTestLedge(own, cont, hit_object, CORRECTION_RAY):
 		print("cant grab - carry!")
 		return None, None, None
 
-	own_pos = own.worldPosition
+	own_pos = own.worldPosition.copy()
 	'''
 	own_pos = own.worldPosition
 	own_pos_ofs = own_pos[:]

@@ -286,11 +286,11 @@ def main(cont):
 			print('Oops: portal switch error,', target_name, 'object is not in the scene')
 			return
 		
-		pos = target_ob.worldPosition
+		pos = target_ob.worldPosition.copy()
 		pos[2] += 1.0 * ID # move other players higher so they dont overlap
 		
 		own_player.localPosition = pos
-		own_player.localOrientation = target_ob.worldOrientation
+		own_player.localOrientation = target_ob.worldOrientation.copy()
 		
 		# Keep logic.PORTAL_OBNAME incase there are more players
 		

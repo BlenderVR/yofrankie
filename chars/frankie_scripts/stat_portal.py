@@ -122,8 +122,8 @@ def main(cont):
 		own_rig = cont.sensors['rig_linkonly'].owner # The rig owns this! - cheating way ti get the rig/
 		own_rig.timeOffset = own_rig.defTimeOffset
 		
-		own.localPosition = target_ob.worldPosition
-		own.localOrientation = target_ob.worldOrientation
+		own.localPosition = target_ob.worldPosition.copy()
+		own.localOrientation = target_ob.worldOrientation.copy()
 		own.setLinearVelocity((0.0, 0.0, 0.0))
 		
 		# set the state incase we are climbing or somthing
