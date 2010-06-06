@@ -23,7 +23,7 @@ BLENDER = blender
 PYTHON = python
 SVN = svn
 PACKAGE_DIR = ./package
-PREFIX = /usr
+PREFIX ?= /usr/local
 
 dist_dirs = \
 	audio \
@@ -69,13 +69,18 @@ clean:
 	rm -rf $(PACKAGE_DIR)
 
 install:
-	install -d $(DESTDIR)/usr/share/yofrankie-bge
-	cp -rT $(PACKAGE_DIR) $(DESTDIR)/usr/share/yofrankie-bge
+	install -d $(DESTDIR)$(PREFIX)/share/yofrankie-bge
+	cp -rT $(PACKAGE_DIR) $(DESTDIR)$(PREFIX)/share/yofrankie-bge
 	install -D -m 755 dist/yofrankie-bge $(DESTDIR)$(PREFIX)/games/yofrankie-bge
+	install -D -m 755 dist/yofrankie-bge.6 $(DESTDIR)$(PREFIX)/share/man/man6/yofrankie-bge.6
 	install -D -m 644 dist/yofrankie-bge.desktop $(DESTDIR)$(PREFIX)/share/applications/yofrankie-bge.desktop
 	install -D -m 644 dist/yofrankie.png $(DESTDIR)$(PREFIX)/share/icons/hicolor/128x128/apps/yofrankie-bge.png
 	install -d $(DESTDIR)$(PREFIX)/share/icons/hicolor/48x48/apps
 	convert dist/yofrankie.png -resize 48 $(DESTDIR)$(PREFIX)/share/icons/hicolor/48x48/apps/yofrankie-bge.png
+	# Move font into font directory
+	install -d $(DESTDIR)$(PREFIX)/share/fonts/truetype
+	mv $(DESTDIR)$(PREFIX)/share/yofrankie-bge/menus/yo_frankie.ttf $(DESTDIR)$(PREFIX)/share/fonts/truetype
+	ln -s ../../fonts/truetype/yo_frankie.ttf $(DESTDIR)$(PREFIX)/share/yofrankie-bge/menus/yo_frankie.ttf
 
 gz:
 	tar -c --exclude-vcs --transform="s@^@$(NAME)-$(VERSION)/@" $(dist_dirs) $(dist_files) | gzip -cn9 > $(NAME)-$(VERSION).tar.gz
