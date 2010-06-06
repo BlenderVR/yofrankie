@@ -40,7 +40,7 @@ def main(cont):
 	# Assign dummy value
 	own['own_rig'] = 0
 	for ob in own.children:
-		name = ob.name[2:]
+		name = ob.name
 		
 		if 'rig_ram' in name:
 			own['type'] = 'ram'

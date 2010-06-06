@@ -130,7 +130,7 @@ def main(cont):
 			## print('\thud: setting icon!', i, id, icon_mesh_name, life, lifemax)
 			
 			current_mesh = actu.mesh
-			if current_mesh: current_mesh = current_mesh.name[2:]
+			if current_mesh: current_mesh = current_mesh.name
 			
 			# print("\thud debug", icon_mesh_name, current_mesh, icon_text, actu_text.Text, UPDATE_FULL)
 			
