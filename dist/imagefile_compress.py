@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # --------------------------------------------------------------------------
-# Blendfile compresser
+# Imagefile compresser
 # --------------------------------------------------------------------------
 
 # ##### BEGIN GPL LICENSE BLOCK #####
@@ -28,6 +28,7 @@
 # Bug in blender in 2.48 where G.curscreen is left empty causing the blenderplayer to crash
 # until its fixed this needs to run in forground mode
 BACKGROUND = True
+USE_JPEG = True
 
 # not nice but fixes index color image being converted
 EXCEPTIONS = ['font_peach.tga']
@@ -36,6 +37,10 @@ EXCEPTIONS = ['font_peach.tga']
 import sys
 root_dir = sys.argv[-1]
 blend_bin = sys.argv[-2]
+
+if "--nojpeg" in sys.argv:
+	USE_JPEG = False
+
 import os
 import os.path
 	
@@ -131,7 +136,7 @@ Image: textures/stone_cliff_tile_001_nor.png
 	return True
 
 def replace_ext(path, ext):
-	return '.'.join( path.split('.')[:-1] ) + '.' + ext
+	return '.'.join( path.split('.')[:-1] ) + ext
 
 def main():
 	
@@ -154,30 +159,41 @@ def main():
 			continue
 		
 		f_lower= f.lower()
-		if f_lower.endswith('.png') or\
-		f_lower.endswith('.tga'):
-			
+		if f_lower.endswith('.png') or f_lower.endswith('.tga'):
 			print f,'...',
 			tot_images+=1
 			# allows for dirs with .blend, will just be false.
-			if isimage_noalpha(f):
+			has_no_alpha = isimage_noalpha(f)
+			if has_no_alpha or not USE_JPEG:
 				print 'compressing ...',
 				tot_compressed+= 1
 				orig_size= os.path.getsize(f)
 				tot_blend_size+= orig_size
-				f_jpg = replace_ext(f, 'jpg')
-				os.system('convert "%s" "%s"' % (f, f_jpg))
-				new_size= os.path.getsize(f_jpg)
-				
+
+				if USE_JPEG:
+					f_new = replace_ext(f, '.jpg')
+					os.system('convert "%s" "%s"' % (f, f_new))
+				else:
+					f_new = replace_ext(f, '_temp_' + os.path.splitext(f)[1])
+					if has_no_alpha:
+						os.system('convert +matte -quality 100 "%s" "%s"' % (f, f_new))
+					else:
+						os.system('convert -quality 100 "%s" "%s"' % (f, f_new))
+
+				new_size= os.path.getsize(f_new)
+
 				if new_size < orig_size:
 					os.system('rm "%s"' % f) # remove the uncompressed image
 					tot_blend_size_saved += orig_size-new_size
 					print 'saved %.2f%%' % (100-(100*(float(new_size)/orig_size)))
+
+					if not USE_JPEG:
+						os.system('mv "%s" "%s"' % (f_new, f))
 					
 				else:
-					os.system('rm "%s"' % f_jpg) # jpeg image isnt smaller, remove it
+					os.system('rm "%s"' % f_new) # jpeg image isnt smaller, remove it
 					print 'no space saved, not using compressed file'
-				
+
 			else:
 				print 'has alpha, cannot compress.'
 				tot_alredy_compressed+=1
@@ -189,20 +205,19 @@ def main():
 	print '\nTotal Size in Images: %sMB' % (((tot_blend_size)/1024)/1024)
 	print 'Total Saved in Images: %sMB' % (((tot_blend_size_saved)/1024)/1024)
 
+	if USE_JPEG:
+		# Now relink images
+		for f in files:
+			f_lower = f.lower()
+			if f_lower.endswith('.blend'):
+				if BACKGROUND:
+					bg = '-b'
+				else:
+					bg = ''
+				
+				os.system('%s %s "%s" -P dist/imagefile_relink.py' % (blend_bin, bg, f))
 
-	# Now relink images
-	for f in files:
-		f_lower = f.lower()
-		if f_lower.endswith('.blend'):
-			if BACKGROUND:
-				bg = '-b'
-			else:
-				bg = ''
-			
-			os.system('%s %s "%s" -P dist/imagefile_relink.py' % (blend_bin, bg, f))
-			
-			
-	
+
 
 if __name__=='__main__':
 	main()
