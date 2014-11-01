@@ -17,8 +17,8 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import level_of_detail
-import carry_init
-import carry_release
-import sheep_count
-import type_ram_detector
+from . import level_of_detail
+from . import carry_init
+from . import carry_release
+from . import sheep_count
+from . import type_ram_detector

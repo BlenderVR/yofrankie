@@ -18,7 +18,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import help_text
-import hit_list
-import init
-import life_meter
+from . import help_text
+from . import hit_list
+from . import init
+from . import life_meter

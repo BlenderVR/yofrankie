@@ -18,5 +18,5 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import dyn_portal
-import dyn_text
+from . import dyn_portal
+from . import dyn_text

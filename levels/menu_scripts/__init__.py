@@ -18,9 +18,9 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import init
-import select
-import options_conf2scene
-import options_key_grab
-import options_joystick
-import joystick_message
+from . import init
+from . import select
+from . import options_conf2scene
+from . import options_key_grab
+from . import options_joystick
+from . import joystick_message

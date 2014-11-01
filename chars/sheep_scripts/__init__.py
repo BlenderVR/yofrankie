@@ -18,11 +18,11 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import attack_init
-import attack_predator
-import init_id
-import navigate
-import respawn_end
-import respawn_start
-import stat_hit
-import stat_kill
+from . import attack_init
+from . import attack_predator
+from . import init_id
+from . import navigate
+from . import respawn_end
+from . import respawn_start
+from . import stat_hit
+from . import stat_kill

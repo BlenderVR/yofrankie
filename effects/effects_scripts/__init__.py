@@ -18,6 +18,6 @@
 # ##### END GPL LICENSE BLOCK #####
 
 
-import splash
-import shader_uvtx
-import shader_lava
+from . import splash
+from . import shader_uvtx
+from . import shader_lava
