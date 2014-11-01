@@ -23,7 +23,7 @@ from bge import logic
 # Hit a Kill Object? How much and reset the time.
 
 import random
-from mathutils import Vector, Matrix, RotationMatrix
+from mathutils import Vector, Matrix
 
 '''
 from bge import logic as g
@@ -115,10 +115,10 @@ def reset_target(own, cont, own_pos, predator_ob):
             new_dir.z = 0.0
             new_dir.length = L
 
-            # new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
+            # new_dir = Vector(own_front) * Matrix.Rotation(ang, 3, 'Z')
             # 22.5 deg = 0.39269908169872 rad
             ang = random.uniform(-0.39269908169872, 0.39269908169872)
-            new_dir = new_dir * RotationMatrix(ang, 3, 'Z')
+            new_dir = new_dir * Matrix.Rotation(ang, 3, 'Z')
 
             own['target_x'] = new_dir.x + own_pos[0]
             own['target_y'] = new_dir.y + own_pos[1]
@@ -128,7 +128,7 @@ def reset_target(own, cont, own_pos, predator_ob):
         # Random target
         # 90 deg = 1.5707963267949 rad; 270 deg = 4.7123889803847 rad
         ang = random.uniform(1.5707963267949, 4.7123889803847)
-        new_dir = Vector(own_front) * RotationMatrix(ang, 3, 'Z')
+        new_dir = Vector(own_front) * Matrix.Rotation(ang, 3, 'Z')
 
         own['target_x'] = new_dir.x + own_pos[0]
         own['target_y'] = new_dir.y + own_pos[1]

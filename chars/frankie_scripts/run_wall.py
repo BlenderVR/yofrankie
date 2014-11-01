@@ -24,7 +24,7 @@ either run allongside the wall or reflect off it.
 '''
 from bge import logic
 
-from mathutils import Vector, Matrix, RotationMatrix
+from mathutils import Vector, Matrix
 
 def main(cont):
     own = cont.owner
@@ -68,9 +68,9 @@ def main(cont):
             cross = wall_nor.cross(own_neg_y)
             # 90 deg = 1.5707963267949 rad
             if cross.z > 0.0:
-                paralelle_dir = wall_nor * RotationMatrix(-1.5707963267949, 3, 'Z')
+                paralelle_dir = wall_nor * Matrix.Rotation(-1.5707963267949, 3, 'Z')
             else:
-                paralelle_dir = wall_nor * RotationMatrix(1.5707963267949, 3, 'Z')
+                paralelle_dir = wall_nor * Matrix.Rotation(1.5707963267949, 3, 'Z')
 
             own.alignAxisToVect(paralelle_dir, 1, 0.1)
             return

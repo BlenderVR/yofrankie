@@ -20,7 +20,7 @@
 
 # import frank_ledge_module
 from bge import logic
-from mathutils import Vector, Matrix, RotationMatrix
+from mathutils import Vector, Matrix
 from ledge_test import frankTestLedge, CLIMB_HANG_Y_OFFSET, CLIMB_HANG_Z_OFFSET
 
 def do_reset_timeofs(cont):
@@ -100,7 +100,7 @@ def main(cont):
         d.z = 0.0
         d.length = -CLIMB_HANG_Y_OFFSET
 
-        pos_new = (d*RotationMatrix(ang, 3, 'Z')) + ledge_hit
+        pos_new = (d * Matrix.Rotation(ang, 3, 'Z')) + ledge_hit
 
     else:
         # Simple but not good enough

@@ -20,7 +20,7 @@
 
 from bge import logic
 import mathutils
-from mathutils import Vector, RotationMatrix
+from mathutils import Vector, Matrix
 
 def main(cont):
 
@@ -85,7 +85,7 @@ def main(cont):
         # 2 * PI
         ang = 6.2831853071796 * (i/totFiles)
         # print(i,f,ang)
-        mat = RotationMatrix(ang, 3, 'Z')
+        mat = Matrix.Rotation(ang, 3, 'Z')
         pos_xy = list((start * mat) + own_pos)  # rotate and center around the logic object
 
         ray_down = pos_xy[:]
