@@ -61,31 +61,31 @@ if(temp.b > 1.0){temp.rg+=temp.b-1.0;}
 
 
 def main(cont):
-	# for each object
-	own = cont.owner
-	time = own['time'] * 3.0
-	for mesh in own.meshes:
-		for mat in mesh.materials:
-			# regular TexFace materials do NOT have this function
-			try:
-				mat_index = mat.getMaterialIndex()
-			except:
-				return
+    # for each object
+    own = cont.owner
+    time = own['time'] * 3.0
+    for mesh in own.meshes:
+        for mat in mesh.materials:
+            # regular TexFace materials do NOT have this function
+            try:
+                mat_index = mat.getMaterialIndex()
+            except:
+                return
 
-			# find an index
-			found = 0
-			for i in range(len(MaterialIndexList)):
-				if mat_index == MaterialIndexList[i]:
-					found=1
-					break
-			if not found: continue
+            # find an index
+            found = 0
+            for i in range(len(MaterialIndexList)):
+                if mat_index == MaterialIndexList[i]:
+                    found=1
+                    break
+            if not found: continue
 
-			shader = mat.getShader()
-			if shader != None:
-				if not shader.isValid():
-					shader.setSource(VertexShader, FragmentShader,1)
-				
-				shader.setUniform1f('time', time)
-				shader.setSampler('Texture1', 0)
-				shader.setSampler('Texture2', 1)
-				#shader.setSampler('det', 2)
+            shader = mat.getShader()
+            if shader != None:
+                if not shader.isValid():
+                    shader.setSource(VertexShader, FragmentShader,1)
+                
+                shader.setUniform1f('time', time)
+                shader.setSampler('Texture1', 0)
+                shader.setSampler('Texture2', 1)
+                #shader.setSampler('det', 2)

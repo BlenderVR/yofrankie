@@ -55,7 +55,7 @@ import action_carry
 import action_ground_test
 
 # Others
-import idle_anim		# state 8
-import glide			# state 19
-import respawn			# state 26
-import drown_revive	# state 28
+import idle_anim        # state 8
+import glide            # state 19
+import respawn          # state 26
+import drown_revive # state 28

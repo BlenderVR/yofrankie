@@ -56,31 +56,31 @@ if(temp.b > 1.0){temp.rg+=temp.b-1.0;}
 
 
 def main(cont):
-	own = cont.owner
-	
-	time = own['time']
-	meshes = own.meshes
+    own = cont.owner
+    
+    time = own['time']
+    meshes = own.meshes
 
-	for mesh in meshes:
+    for mesh in meshes:
 
-		for mat in mesh.materials:
-			# only GLSL
-			try:
-				mat_index = mat.getMaterialIndex()
-			except:
-				return
+        for mat in mesh.materials:
+            # only GLSL
+            try:
+                mat_index = mat.getMaterialIndex()
+            except:
+                return
 
-			# find an index				
-			found = 0
-			for i in range(len(MaterialIndexList)):
-				if mat_index == MaterialIndexList[i]:
-					found=1
-					break
-			if not found: continue
+            # find an index             
+            found = 0
+            for i in range(len(MaterialIndexList)):
+                if mat_index == MaterialIndexList[i]:
+                    found=1
+                    break
+            if not found: continue
 
-			shader = mat.getShader()
-			if shader != None:
-				if not shader.isValid():
-					shader.setSource(VertexShader, FragmentShader,1)
-				shader.setUniform1f('time', time)
-				shader.setSampler('Texture1', 0)
+            shader = mat.getShader()
+            if shader != None:
+                if not shader.isValid():
+                    shader.setSource(VertexShader, FragmentShader,1)
+                shader.setUniform1f('time', time)
+                shader.setSampler('Texture1', 0)

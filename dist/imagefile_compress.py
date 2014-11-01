@@ -38,16 +38,16 @@ root_dir = sys.argv[-1]
 blend_bin = sys.argv[-2]
 import os
 import os.path
-	
+    
 def fileList(path):
-	for dirpath, dirnames, filenames in os.walk(path):
-		for filename in filenames:
-			yield os.path.join(dirpath, filename)
+    for dirpath, dirnames, filenames in os.walk(path):
+        for filename in filenames:
+            yield os.path.join(dirpath, filename)
 
 def isimage_noalpha(path):
-	# Parse image magick output
-	# Will look somthing like this
-	'''
+    # Parse image magick output
+    # Will look somthing like this
+    '''
 Image: textures/stone_cliff_tile_001_nor.png
   Format: PNG (Portable Network Graphics)
   Class: DirectClass
@@ -112,97 +112,97 @@ Image: textures/stone_cliff_tile_001_nor.png
   Filesize: 798kb
   Number pixels: 256kb
 
-	'''
-	
-	lines = [l.strip() for l in os.popen('identify -verbose "%s"' % path).read().split('\n')]
-	chan_ok = False
-	for i,l in enumerate(lines):
-		
-		if l == 'alpha:':
-			#print "\tFound ALPHA"
-			min_str = lines[i+1] # min: 145 (0.568627)
-			#print "\t\tMinSTR", min_str
-			if min_str.startswith('min:'):
-				if min_str.split()[1] == '255':
-					return True
-				else:
-					return False
-	
-	return True
+    '''
+    
+    lines = [l.strip() for l in os.popen('identify -verbose "%s"' % path).read().split('\n')]
+    chan_ok = False
+    for i,l in enumerate(lines):
+        
+        if l == 'alpha:':
+            #print "\tFound ALPHA"
+            min_str = lines[i+1] # min: 145 (0.568627)
+            #print "\t\tMinSTR", min_str
+            if min_str.startswith('min:'):
+                if min_str.split()[1] == '255':
+                    return True
+                else:
+                    return False
+    
+    return True
 
 def replace_ext(path, ext):
-	return '.'.join( path.split('.')[:-1] ) + '.' + ext
+    return '.'.join( path.split('.')[:-1] ) + '.' + ext
 
 def main():
-	
-	if not os.path.isdir(root_dir):
-		print 'Expected a dir to search for blendfiles as a final arg. aborting.'
-		return
-	
-	print 'Searching "%s"...' % root_dir
-	files= [f for f in fileList(root_dir)]
-	files.sort()
-	print 'done.'
-	#print files
-	tot_files= len(files)
-	tot_compressed= tot_images= tot_alredy_compressed= 0
-	tot_blend_size= 0
-	tot_blend_size_saved= 0
-	for f in files:
-		
-		if f.split('/')[-1].split('\\')[-1] in EXCEPTIONS:
-			continue
-		
-		f_lower= f.lower()
-		if f_lower.endswith('.png') or\
-		f_lower.endswith('.tga'):
-			
-			print f,'...',
-			tot_images+=1
-			# allows for dirs with .blend, will just be false.
-			if isimage_noalpha(f):
-				print 'compressing ...',
-				tot_compressed+= 1
-				orig_size= os.path.getsize(f)
-				tot_blend_size+= orig_size
-				f_jpg = replace_ext(f, 'jpg')
-				os.system('convert "%s" "%s"' % (f, f_jpg))
-				new_size= os.path.getsize(f_jpg)
-				
-				if new_size < orig_size:
-					os.system('rm "%s"' % f) # remove the uncompressed image
-					tot_blend_size_saved += orig_size-new_size
-					print 'saved %.2f%%' % (100-(100*(float(new_size)/orig_size)))
-					
-				else:
-					os.system('rm "%s"' % f_jpg) # jpeg image isnt smaller, remove it
-					print 'no space saved, not using compressed file'
-				
-			else:
-				print 'has alpha, cannot compress.'
-				tot_alredy_compressed+=1
-	
-	print '\nTotal files:', tot_files
-	print 'Total Images:', tot_images
-	print 'Total Images Compressed:', tot_compressed
-	print 'Total Alredy Compressed:', tot_alredy_compressed
-	print '\nTotal Size in Images: %sMB' % (((tot_blend_size)/1024)/1024)
-	print 'Total Saved in Images: %sMB' % (((tot_blend_size_saved)/1024)/1024)
+    
+    if not os.path.isdir(root_dir):
+        print 'Expected a dir to search for blendfiles as a final arg. aborting.'
+        return
+    
+    print 'Searching "%s"...' % root_dir
+    files= [f for f in fileList(root_dir)]
+    files.sort()
+    print 'done.'
+    #print files
+    tot_files= len(files)
+    tot_compressed= tot_images= tot_alredy_compressed= 0
+    tot_blend_size= 0
+    tot_blend_size_saved= 0
+    for f in files:
+        
+        if f.split('/')[-1].split('\\')[-1] in EXCEPTIONS:
+            continue
+        
+        f_lower= f.lower()
+        if f_lower.endswith('.png') or\
+        f_lower.endswith('.tga'):
+            
+            print f,'...',
+            tot_images+=1
+            # allows for dirs with .blend, will just be false.
+            if isimage_noalpha(f):
+                print 'compressing ...',
+                tot_compressed+= 1
+                orig_size= os.path.getsize(f)
+                tot_blend_size+= orig_size
+                f_jpg = replace_ext(f, 'jpg')
+                os.system('convert "%s" "%s"' % (f, f_jpg))
+                new_size= os.path.getsize(f_jpg)
+                
+                if new_size < orig_size:
+                    os.system('rm "%s"' % f) # remove the uncompressed image
+                    tot_blend_size_saved += orig_size-new_size
+                    print 'saved %.2f%%' % (100-(100*(float(new_size)/orig_size)))
+                    
+                else:
+                    os.system('rm "%s"' % f_jpg) # jpeg image isnt smaller, remove it
+                    print 'no space saved, not using compressed file'
+                
+            else:
+                print 'has alpha, cannot compress.'
+                tot_alredy_compressed+=1
+    
+    print '\nTotal files:', tot_files
+    print 'Total Images:', tot_images
+    print 'Total Images Compressed:', tot_compressed
+    print 'Total Alredy Compressed:', tot_alredy_compressed
+    print '\nTotal Size in Images: %sMB' % (((tot_blend_size)/1024)/1024)
+    print 'Total Saved in Images: %sMB' % (((tot_blend_size_saved)/1024)/1024)
 
 
-	# Now relink images
-	for f in files:
-		f_lower = f.lower()
-		if f_lower.endswith('.blend'):
-			if BACKGROUND:
-				bg = '-b'
-			else:
-				bg = ''
-			
-			os.system('%s %s "%s" -P dist/imagefile_relink.py' % (blend_bin, bg, f))
-			
-			
-	
+    # Now relink images
+    for f in files:
+        f_lower = f.lower()
+        if f_lower.endswith('.blend'):
+            if BACKGROUND:
+                bg = '-b'
+            else:
+                bg = ''
+            
+            os.system('%s %s "%s" -P dist/imagefile_relink.py' % (blend_bin, bg, f))
+            
+            
+    
 
 if __name__=='__main__':
-	main()
+    main()

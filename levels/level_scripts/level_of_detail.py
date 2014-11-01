@@ -21,25 +21,25 @@
 # remove objects based on detail setting.
 from bge import logic
 def main(cont):
-	own = cont.owner
-	sce = logic.getCurrentScene()
-	
-	conf = logic.globalDict.get('CONFIG', {})
-	detail = conf.get('GRAPHICS_DETAIL', 2)
-	
-	# detail is a pref, can be 0,1,2: 2 is high detail, dont do anything
+    own = cont.owner
+    sce = logic.getCurrentScene()
+    
+    conf = logic.globalDict.get('CONFIG', {})
+    detail = conf.get('GRAPHICS_DETAIL', 2)
+    
+    # detail is a pref, can be 0,1,2: 2 is high detail, dont do anything
 
-	for ob in sce.objects:
-		lod_level= ob.get('lod_level')
-		if lod_level != None:
-			end = False
-			
-			if detail==0:
-				end = (lod_level < 2)
-			elif detail==1:
-				end = (lod_level < 1)
-			
-			if end:		ob.endObject()
-			else:		del ob['lod_level']
-		
-	own.endObject()
+    for ob in sce.objects:
+        lod_level= ob.get('lod_level')
+        if lod_level != None:
+            end = False
+            
+            if detail==0:
+                end = (lod_level < 2)
+            elif detail==1:
+                end = (lod_level < 1)
+            
+            if end:     ob.endObject()
+            else:       del ob['lod_level']
+        
+    own.endObject()

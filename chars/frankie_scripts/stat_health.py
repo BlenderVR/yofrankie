@@ -28,38 +28,38 @@ some other character attacking us could do this.
 from bge import logic
 
 def main(cont):
-	
-	own = cont.owner
-	
-	# See frank_stat_hit, this sets the hit property that triggers this script
-	hit = own['hit']
-	
-	if hit == 0 or own['revive_time'] < 1.0:
-		return
-	
-	own['hit'] = 0
-	
-	own['life']= max(0, own['life'] - hit)
-	own['revive_time']= 0.0
-		
-	# Update the HUD
-	hud_dict = logic.globalDict['HUD']
-	if own['id'] == 0:	hud_dict['life_p1'] = own['life']
-	else:			hud_dict['life_p2'] = own['life']
-	cont.activate('send_healthchange') # send message to hud telling it to update health
+    
+    own = cont.owner
+    
+    # See frank_stat_hit, this sets the hit property that triggers this script
+    hit = own['hit']
+    
+    if hit == 0 or own['revive_time'] < 1.0:
+        return
+    
+    own['hit'] = 0
+    
+    own['life']= max(0, own['life'] - hit)
+    own['revive_time']= 0.0
+        
+    # Update the HUD
+    hud_dict = logic.globalDict['HUD']
+    if own['id'] == 0:  hud_dict['life_p1'] = own['life']
+    else:           hud_dict['life_p2'] = own['life']
+    cont.activate('send_healthchange') # send message to hud telling it to update health
 
-	# are we dead?
-	if own['life'] == 0:
-		cont.activate('dead_state')
-		return
-	
-	# Play Hit Anim
-	if own['carrying']:
-		cont.deactivate('hit')
-		cont.activate('hit_carry')
-	else:
-		cont.deactivate('hit_carry')
-		cont.activate('hit')
-	
-	# Always flash color
-	cont.activate('hit_flashred')
+    # are we dead?
+    if own['life'] == 0:
+        cont.activate('dead_state')
+        return
+    
+    # Play Hit Anim
+    if own['carrying']:
+        cont.deactivate('hit')
+        cont.activate('hit_carry')
+    else:
+        cont.deactivate('hit_carry')
+        cont.activate('hit')
+    
+    # Always flash color
+    cont.activate('hit_flashred')
