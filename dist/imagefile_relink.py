@@ -30,7 +30,7 @@ for i in bpy.data.images:
     if i.lib==None:
         filename = i.filename
         filename_abs = Blender.sys.expandpath(filename)
-        
+
         if not Blender.sys.exists(filename_abs):
             filename_jpg = replace_ext(filename_abs, 'jpg')
             if Blender.sys.exists(filename_jpg):

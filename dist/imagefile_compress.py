@@ -38,7 +38,7 @@ root_dir = sys.argv[-1]
 blend_bin = sys.argv[-2]
 import os
 import os.path
-    
+
 def fileList(path):
     for dirpath, dirnames, filenames in os.walk(path):
         for filename in filenames:
@@ -113,11 +113,11 @@ Image: textures/stone_cliff_tile_001_nor.png
   Number pixels: 256kb
 
     '''
-    
+
     lines = [l.strip() for l in os.popen('identify -verbose "%s"' % path).read().split('\n')]
     chan_ok = False
     for i,l in enumerate(lines):
-        
+
         if l == 'alpha:':
             #print "\tFound ALPHA"
             min_str = lines[i+1] # min: 145 (0.568627)
@@ -127,18 +127,18 @@ Image: textures/stone_cliff_tile_001_nor.png
                     return True
                 else:
                     return False
-    
+
     return True
 
 def replace_ext(path, ext):
     return '.'.join( path.split('.')[:-1] ) + '.' + ext
 
 def main():
-    
+
     if not os.path.isdir(root_dir):
         print 'Expected a dir to search for blendfiles as a final arg. aborting.'
         return
-    
+
     print 'Searching "%s"...' % root_dir
     files= [f for f in fileList(root_dir)]
     files.sort()
@@ -149,14 +149,14 @@ def main():
     tot_blend_size= 0
     tot_blend_size_saved= 0
     for f in files:
-        
+
         if f.split('/')[-1].split('\\')[-1] in EXCEPTIONS:
             continue
-        
+
         f_lower= f.lower()
         if f_lower.endswith('.png') or\
         f_lower.endswith('.tga'):
-            
+
             print f,'...',
             tot_images+=1
             # allows for dirs with .blend, will just be false.
@@ -168,20 +168,20 @@ def main():
                 f_jpg = replace_ext(f, 'jpg')
                 os.system('convert "%s" "%s"' % (f, f_jpg))
                 new_size= os.path.getsize(f_jpg)
-                
+
                 if new_size < orig_size:
                     os.system('rm "%s"' % f) # remove the uncompressed image
                     tot_blend_size_saved += orig_size-new_size
                     print 'saved %.2f%%' % (100-(100*(float(new_size)/orig_size)))
-                    
+
                 else:
                     os.system('rm "%s"' % f_jpg) # jpeg image isnt smaller, remove it
                     print 'no space saved, not using compressed file'
-                
+
             else:
                 print 'has alpha, cannot compress.'
                 tot_alredy_compressed+=1
-    
+
     print '\nTotal files:', tot_files
     print 'Total Images:', tot_images
     print 'Total Images Compressed:', tot_compressed
@@ -198,11 +198,11 @@ def main():
                 bg = '-b'
             else:
                 bg = ''
-            
+
             os.system('%s %s "%s" -P dist/imagefile_relink.py' % (blend_bin, bg, f))
-            
-            
-    
+
+
+
 
 if __name__=='__main__':
     main()

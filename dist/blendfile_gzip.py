@@ -35,21 +35,21 @@ def isblend_nogz(path):
         is_blend= f.read(7) == 'BLENDER'
         f.close()
         return is_blend
-        
+
     except:
         return False
-    
+
 def fileList(path):
     for dirpath, dirnames, filenames in os.walk(path):
         for filename in filenames:
             yield os.path.join(dirpath, filename)
 
 def main():
-    
+
     if not os.path.isdir(root_dir):
         print 'Expected a dir to search for blendfiles as a final arg. aborting.'
         return
-    
+
     print 'Searching "%s"...' % root_dir
     files= [f for f in fileList(root_dir)]
     files.sort()
@@ -65,7 +65,7 @@ def main():
             if f_lower.endswith('.blend') or\
             f_lower[:-1].endswith('.blend') or\
             f_lower[:-2].endswith('.blend'): # .blend10 +
-                
+
                 print f,'...',
                 tot_blends+=1
                 # allows for dirs with .blend, will just be false.
@@ -82,8 +82,8 @@ def main():
                 else:
                     print 'alredy compressed.'
                     tot_alredy_compressed+=1
-                    
-    
+
+
     print '\nTotal files:', tot_files
     print 'Total Blend:', tot_blends
     print 'Total Blend Compressed:', tot_compressed

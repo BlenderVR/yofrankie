@@ -21,7 +21,7 @@
 '''
 This script runs when frankie is initialized,
 it backs up properties for respawning, sets his unique ID and
-assignes custom keyconfig and a screen (when 2 player splitscreen), 
+assignes custom keyconfig and a screen (when 2 player splitscreen),
 when there is only 1 player, the second player removes himself.
 
 This also uses the configuration to set the GLSL detail options
@@ -39,7 +39,7 @@ from bge import logic
 from bge import types
 
 def main(cont):
-    
+
     def main_defaults():
         try:    conf = logic.globalDict['CONFIG']
         except: conf = logic.globalDict['CONFIG'] = {}
@@ -50,32 +50,32 @@ def main(cont):
 
         confdef('PLAYER_COUNT', 2)
         confdef('GRAPHICS_DETAIL', 1) # 2 == high
-        
-        
+
+
         # Keys
-        
+
         # P1
         confdef('KEY_UP_P1', events.UPARROWKEY)
         confdef('KEY_DOWN_P1', events.DOWNARROWKEY)
         confdef('KEY_LEFT_P1', events.LEFTARROWKEY)
-        confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY) 
-        
+        confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY)
+
         # P2
-        confdef('KEY_UP_P2', events.WKEY) 
+        confdef('KEY_UP_P2', events.WKEY)
         confdef('KEY_DOWN_P2', events.SKEY)
         confdef('KEY_LEFT_P2', events.AKEY)
-        confdef('KEY_RIGHT_P2', events.DKEY) 
-        
+        confdef('KEY_RIGHT_P2', events.DKEY)
+
         # P1
-        confdef('KEY_JUMP_P1', events.MKEY) 
-        confdef('KEY_THROW_P1', events.SPACEKEY) 
-        confdef('KEY_ACTION_P1', events.NKEY) 
-        
+        confdef('KEY_JUMP_P1', events.MKEY)
+        confdef('KEY_THROW_P1', events.SPACEKEY)
+        confdef('KEY_ACTION_P1', events.NKEY)
+
         # P2
         confdef('KEY_JUMP_P2', events.GKEY)
         confdef('KEY_THROW_P2', events.JKEY)
         confdef('KEY_ACTION_P2', events.HKEY)
-        
+
     main_defaults()
     # ---------------------
 
@@ -115,12 +115,12 @@ def main(cont):
 
     def setPlayers():
         from bge import render
-        
+
         # menu leaves mouse on
         if ID==0: render.showMouse(False)
-        
+
         playcount = conf['PLAYER_COUNT']
-        
+
         if playcount != 1 and playcount != 2:
             cont.activate('set_camera')
             return True
@@ -128,55 +128,55 @@ def main(cont):
             print("Unsupported number of players, running anyway")
             cont.activate('set_camera')
             return True
-        
+
         # Single player game. no tricks
         if playcount == 1:
             if ID == 0:
                 pass
             else:
                 return False
-        
+
         elif playcount == 2:
 
             # Split screen
             own_camera.useViewport = True
-            
+
             w = render.getWindowWidth()
             h = render.getWindowHeight()
             if ID == 0:
                 # Vert
-                #own_camera.setViewport(0, h/2, w, h) 
+                #own_camera.setViewport(0, h/2, w, h)
                 # Hoz
                 own_camera.setViewport(0, 0, int(w/2), h)
             if ID == 1:
                 # Vert
-                #own_camera.setViewport(0, 0, w, h/2) 
+                #own_camera.setViewport(0, 0, w, h/2)
                 # Hoz
-                own_camera.setViewport(int(w/2), 0, w, h) 
-        
+                own_camera.setViewport(int(w/2), 0, w, h)
+
         if not WITHOUT_CAMERA:
             cont.activate('set_camera')
-        
+
         return True
 
     def setHUD():
         try:    hud_dict = logic.globalDict['HUD']
         except: hud_dict = logic.globalDict['HUD'] = {}
-        
+
         hud_dict['life_p%d' % (ID+1)] = own_player['life'] # will be life_p1 or life_p2
         hud_dict['bonecount_p%d' % (ID+1)] = 0 # will be life_p1 or life_p2
-        
+
         # store animals we have hit
         hud_dict['hitlist_p%d' % (ID+1)] = []
-        
+
         if WITHOUT_CAMERA:
             return
-        
+
         # Only add the hud once.
         if ID == 0:# and conf['PLAYER_COUNT'] == 1:
             cont.activate('set_hud')
-        
-        
+
+
 
     def setKeys():
         # First see if we have a valid joystick
@@ -184,14 +184,14 @@ def main(cont):
         # print(len(sensors), 'sensors')
         joySensors = [s for s in sensors if type(s) == types.SCA_JoystickSensor]
         keySensors = [s for s in sensors if type(s) == types.SCA_KeyboardSensor]
-        
+
         own_joy = joySensors[0].owner
         own_kb = keySensors[0].owner
-        
+
         # If we have a valid joystick, then remove keyboard, else remove joystick object.
         for sens in joySensors:
             sens.index = ID # player index can match joystick index
-        
+
         # Use the last joystick sensor
         if sens.connected:
             # remove the keyboard object and dont bother setting up keyconfig
@@ -202,21 +202,21 @@ def main(cont):
             # No joystick connected at ID, setup keys
             print('Player', ID, 'using keyboard')
             own_joy.endObject()
-        
-        
-        
+
+
+
         # Done With joystick, Fallback to keys!
-        
+
         if not conf:
             print("config not loaded")
             return
-        
+
         # First player, leave keys as is
         KEY_MAPPING = None
-        
+
         # Odd but ID 1 is most common key mapping
         # this is because for a single player ID zero is removed
-        
+
         if ID==0:
             # For second player only now
             KEY_MAPPING = {\
@@ -238,14 +238,14 @@ def main(cont):
             events.MKEY : conf['KEY_JUMP_P2'],\
             events.SPACEKEY : conf['KEY_THROW_P2'],\
             }
-        
-        if KEY_MAPPING: 
+
+        if KEY_MAPPING:
             for sens in cont.sensors:
                 if type(sens) == types.SCA_KeyboardSensor:
                     sens.key = KEY_MAPPING[sens.key]
         else:
             print('Cannot map keys for player ID', ID)
-                
+
     def backupPosition():
         # For respawning. run BEFORE backupProps
         own_player['orig_pos'] = '%.3f %.3f %.3f' % tuple(own_player.worldPosition)
@@ -262,47 +262,47 @@ def main(cont):
     def setPortal():
         # This may run when entering a new scene, we may be entering from a portal
         # 2nd players are placed higher, make sure portal enteries have enough room above
-        
+
         sce = logic.getCurrentScene()
-        
+
         try:    scene_name = globalDict['PORTAL_SCENENAME']
         except: scene_name = ''
-        
+
         if scene_name and scene_name != sce.name:
             # we have come from another blend file that needs to switch to a scene.
-            # first switch the scene, this script will run again and 
-            
+            # first switch the scene, this script will run again and
+
             set_scene_actu = cont.actuators['portal_scene']
             set_scene_actu.scene = scene_name
             cont.activate(set_scene_actu)
             return
-        
+
         try:    target_name = globalDict['PORTAL_OBNAME']
         except: return
-        
+
         try:
             target_ob = sce.objects[target_name] # alredy has 'OB' prefix
         except:
             print('Oops: portal switch error,', target_name, 'object is not in the scene')
             return
-        
+
         pos = target_ob.worldPosition.copy()
         pos[2] += 1.0 * ID # move other players higher so they dont overlap
-        
+
         own_player.localPosition = pos
         own_player.localOrientation = target_ob.worldOrientation.copy()
-        
+
         # Keep logic.PORTAL_OBNAME incase there are more players
-        
-        
-        # Annoying, the 'Loading Text', needs to be turned off if we're only 
+
+
+        # Annoying, the 'Loading Text', needs to be turned off if we're only
         for sce in logic.getSceneList():
             if sce.name == 'hud':
                 ob = sce.objects.get('loading')
                 if ob:
                     ob.visible = False
-                    
-                    
+
+
 
     def setGfxQuality():
         from bge import render
@@ -310,11 +310,11 @@ def main(cont):
         # Only to this once
         if ID != 0:
             return
-        
-        
-        
+
+
+
         conf = logic.globalDict['CONFIG']
-        
+
         if conf['GRAPHICS_DETAIL'] == 0:
             print("\tconfig: setting deytail low")
             render.setGLSLMaterialSetting("lights", 1)
@@ -339,29 +339,29 @@ def main(cont):
             render.setGLSLMaterialSetting("ramps", 1)
             render.setGLSLMaterialSetting("nodes", 1)
             render.setGLSLMaterialSetting("extra_textures", 1)
-        
-    
+
+
     def setup_player():
-        
+
         # If the player cant be initialized, dont do anything else
-        
+
         if not setPlayers():
-            own_player.endObject()      
+            own_player.endObject()
             print("REMOVING PLAYER", ID)
             return
         else:
             print("ADDING PLAYER", ID)
-        
+
         setHUD()
         if PROPS != {}:
             restoreProps()
-        
+
         setKeys()
         setPortal() # If we have a portal
         backupPosition() # MUST run before backing up props
         backupProps() # backup changes to logic dict
-        
+
         setGfxQuality()
-    
+
     setup_player()
 

@@ -30,50 +30,50 @@ ITEM_PREFIX = 'item_'
 def main():
     # print('Setting scene properties from python configuration dictionary')
     # print('using dictionary - logic.globalDict["CONFIG"]')
-    
+
     conf = logic.globalDict['CONFIG']
     sce = logic.getCurrentScene()
-    
-    
+
+
     # ***************************
     # First gather item_ prefixed
     # objects to use for config
-    
+
     obs_radio = []
     obs_toggle = []
     obs_key = []
-    
+
     for ob in sce.objects:
         name = ob.name
-        
+
         # Keys are not menu items, they are a special case
         if name.startswith('KEY_'):
             obs_key.append(ob)
             continue
-        
+
         elif not name.startswith(ITEM_PREFIX):
             continue
-        
-        
+
+
         if 'conf_key' not in ob:
             # This is normal, some items are just triggered.
             # and are not for configuring
             continue
-        
+
         conf_key = ob['conf_key']
-        
+
         if conf_key not in conf:
             print('\tMenu error - item:', ob.name, 'uses conf_key:', conf_key, 'not found in logic.globalDict["CONFIG"], ignoring')
             continue
-        
+
         if 'radio' in ob:
             obs_radio.append(ob)
         elif 'toggle' in ob:
             obs_toggle.append(ob)
         else:
             print('\tMenu error - item:', ob.name, 'uses conf_key:', conf_key, 'is not a toggle or a radio button, ignoring')
-            
-    
+
+
     # ***************************
     # Radio - for graphics detail
     radio_items = []
@@ -83,7 +83,7 @@ def main():
             radio_items.append(conf_key)
     # for py 2.4+ can use sets
     # radio_items = set([ob.conf_key for ob in obs_radio])
-    
+
     for conf_key in radio_items:
         conf_value = conf[conf_key]
 
@@ -93,16 +93,16 @@ def main():
                     ob['enabled'] = 1
                 else:
                     ob['enabled'] = 0
-            
-        
+
+
     # ***************************
     # Toggle - for switches
     ## print('\tToggles')
     for ob in obs_toggle:
         ## print('\tSetting toggle state for', ob.getName(), 'conf_key:', ob.conf_key, 'state:', conf[ob.conf_key])
         ob['toggle'] = conf[ob['conf_key']]
-    
-    
+
+
     # ***************************
     # Key Setings
     key_mapping = dict([(ob.name.split('.')[0], ob) for ob in obs_key ]) # object names to key names
@@ -112,7 +112,7 @@ def main():
         except: ob = None
         if ob:      ob['Text'] = events.EventToString(conf[opt]).replace('ARROW', '').replace('KEY', '').lower()
         else:       print('no object found for', opt)
-    
+
     keys = [
         'KEY_UP_P1',\
         'KEY_DOWN_P1',\
@@ -135,6 +135,6 @@ def main():
         'KEY_THROW_P2',\
         'KEY_ACTION_P2',\
     ]
-    
+
     for key in keys:
         confKeyObSet(key)

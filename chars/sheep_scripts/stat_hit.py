@@ -25,7 +25,7 @@ def main(cont):
     PROJECTILE_SPEED = 5.0
     own = cont.owner
     #sens = cont.sensors['projectile_touch']
-    for sens in cont.sensors:       
+    for sens in cont.sensors:
         hit_ob = sens.hitObject
         if hit_ob:
             if 'projectile' in hit_ob:

@@ -26,7 +26,7 @@ def main(cont):
         ID = logic.ID = logic.ID + 1
     except:
         ID = logic.ID = 0
-    
+
     own = cont.owner
     # For respawning.
     own['x_orig'], own['y_orig'], own['z_orig'] = own.worldPosition
@@ -41,7 +41,7 @@ def main(cont):
     own['own_rig'] = 0
     for ob in own.children:
         name = ob.name
-        
+
         if 'rig_ram' in name:
             own['type'] = 'ram'
             del own['carried'], own['projectile'], own['kickable']
@@ -53,7 +53,7 @@ def main(cont):
             own['type'] = 'rat'
             #del own.carried
             break
-        
+
         # Theres an an odd bug with flawsh_death object adder
         # set the object by name and it should help
         # This should not be needed
@@ -61,5 +61,5 @@ def main(cont):
         actu = cont.actuators['create_poof']
         actu.object = 'flash_death'
         '''
-    
+
     cont.activate('default_state')

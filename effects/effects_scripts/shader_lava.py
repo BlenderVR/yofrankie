@@ -30,7 +30,7 @@ void main( void )
 {
     gl_Position = ftransform();
     Texcoord    = gl_MultiTexCoord0.xy;
-    
+
 }
 """
 
@@ -49,8 +49,8 @@ T1.x+=(noise.x)*2.0;
 T1.y+=(noise.y)*2.0;
 T2.x-=(noise.y)*0.3;
 T2.y+=(noise.z)*0.3;
-float     p=  texture2D( Texture1,T1*3.0).a;  
-vec4 color =  texture2D( Texture2, T2*3.0); 
+float     p=  texture2D( Texture1,T1*3.0).a;
+vec4 color =  texture2D( Texture2, T2*3.0);
 vec4 temp= color*(vec4(p,p,p,p)*1.6)+(color*color-0.15);
 if(temp.r > 1.0){temp.bg+=clamp(temp.r-2.0,0.0,100.0);}
 if(temp.g > 1.0){temp.rb+=temp.g-1.0;}
@@ -84,7 +84,7 @@ def main(cont):
             if shader != None:
                 if not shader.isValid():
                     shader.setSource(VertexShader, FragmentShader,1)
-                
+
                 shader.setUniform1f('time', time)
                 shader.setSampler('Texture1', 0)
                 shader.setSampler('Texture2', 1)

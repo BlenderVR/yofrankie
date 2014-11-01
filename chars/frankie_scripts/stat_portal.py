@@ -40,30 +40,30 @@ def backupProps(own):
 
 
 def main(cont):
-    
+
     own = cont.owner
     globalDict = logic.globalDict
-    
+
     portal_ob = cont.sensors['portal_touch'].hitObject
-    
+
     if not portal_ob:
         return
-    
+
     sce = logic.getCurrentScene()
     target_name = portal_ob['portal']
-    
+
     # incase the portal was set before
     # we dont want to use an invalid value
     try:    del globalDict['PORTAL_OBNAME']
     except: pass
-    
+
     try:    del globalDict['PORTAL_SCENENAME']
     except: pass
-        
+
     blend_name = portal_ob.get('portal_blend', '') # No way to check if this really matches up to a blend
     scene_name = portal_ob.get('portal_scene', '') # No way to check if this really matches up to a scene
-    
-    
+
+
     # A bit dodgy, for the first logic tick show the loading text only
     # portal collision must be on pulse so its gets a second tick and runs the portal code below.
     if blend_name or scene_name:
@@ -74,41 +74,41 @@ def main(cont):
                     loading_ob.visible = True
                     return
     # done with loading text!
-    
-    
+
+
     if blend_name:
         # todo, allow blend AND scene switching. at the moment can only do blend switching.
         set_blend_actu = cont.actuators['portal_blend']
         set_blend_actu.fileName = blend_name
-        
+
         try:    del globalDict['PLAYER_ID'] # regenerate ID's on restart
         except: pass
-        
+
         if target_name:
             globalDict['PORTAL_OBNAME'] = target_name
-        
+
         if scene_name:
             globalDict['PORTAL_SCENENAME'] = scene_name
-                
+
         # Backup props
         backupProps(own)
-        
+
         cont.activate(set_blend_actu)
-        
+
     elif scene_name:
         # portal_ob
         set_scene_actu = cont.actuators['portal_scene']
         set_scene_actu.scene = scene_name
-        
+
         try:    del globalDict['PLAYER_ID'] # regenerate ID's on restart
         except: pass
-        
+
         if target_name:
             globalDict['PORTAL_OBNAME'] = target_name
-        
+
         # Backup props
         backupProps(own)
-        
+
         cont.activate(set_scene_actu)
     else:
         # Simple, only move to the portal.
@@ -117,16 +117,16 @@ def main(cont):
         except:
             print('Oops: portal switch error,', target_name, 'object is not in the scene')
             return
-        
+
         # We may be gliding, make sure there is no timeoffset
         own_rig = cont.sensors['rig_linkonly'].owner # The rig owns this! - cheating way ti get the rig/
         own_rig.timeOffset = own_rig.defTimeOffset
-        
+
         own.localPosition = target_ob.worldPosition.copy()
         own.localOrientation = target_ob.worldOrientation.copy()
         own.setLinearVelocity((0.0, 0.0, 0.0))
-        
+
         # set the state incase we are climbing or somthing
         set_state_actu = cont.actuators['fall_state_switch']
-        
+
         cont.activate(set_state_actu)

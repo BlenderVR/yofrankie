@@ -22,7 +22,7 @@
 # property and run any actuator attached
 def main(cont):
     own = cont.owner
-    
+
     carry_sens= cont.sensors['carry_touch']
     carry_done= False
     if carry_sens.positive:
@@ -30,10 +30,10 @@ def main(cont):
             print("shit")
             if 'carried' in ob  and ob['carried']==0:
                 ob['carried']= 1
-                
+
                 ob.setParent(own)
                 carry_done= True
-        
+
         if carry_done:
             play_carry_act= cont.actuators[0]
             cont.activate(play_carry_act)

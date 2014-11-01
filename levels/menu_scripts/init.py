@@ -32,35 +32,35 @@ def main():
     def confdef(opt, value):
         if opt not in conf:
             conf[opt] = value
-    
+
     confdef('PLAYER_COUNT', 1)
-    confdef('GRAPHICS_DETAIL', 2) # 2 == high   
+    confdef('GRAPHICS_DETAIL', 2) # 2 == high
     confdef('GRAPHICS_GLSL', 1) # toggle
-    
+
     # Keys
-    
+
     # P1
     confdef('KEY_UP_P1', events.UPARROWKEY)
     confdef('KEY_DOWN_P1', events.DOWNARROWKEY)
     confdef('KEY_LEFT_P1', events.LEFTARROWKEY)
-    confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY) 
-    
+    confdef('KEY_RIGHT_P1', events.RIGHTARROWKEY)
+
     # P2
-    confdef('KEY_UP_P2', events.WKEY) 
+    confdef('KEY_UP_P2', events.WKEY)
     confdef('KEY_DOWN_P2', events.SKEY)
     confdef('KEY_LEFT_P2', events.AKEY)
-    confdef('KEY_RIGHT_P2', events.DKEY) 
-    
+    confdef('KEY_RIGHT_P2', events.DKEY)
+
     # P1
-    confdef('KEY_JUMP_P1', events.MKEY) 
-    confdef('KEY_THROW_P1', events.SPACEKEY) 
-    confdef('KEY_ACTION_P1', events.NKEY) 
-    
+    confdef('KEY_JUMP_P1', events.MKEY)
+    confdef('KEY_THROW_P1', events.SPACEKEY)
+    confdef('KEY_ACTION_P1', events.NKEY)
+
     # P2
     confdef('KEY_JUMP_P2', events.GKEY)
     confdef('KEY_THROW_P2', events.JKEY)
     confdef('KEY_ACTION_P2', events.HKEY)
-    
-    # 
+
+    #
     from bge import render
     render.showMouse(True)

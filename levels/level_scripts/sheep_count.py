@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-def main(cont): 
+def main(cont):
     # own.sheep_ids needs to start as an empty string
-    
+
     own = cont.owner
-    
+
     sens = cont.sensors['type_hit']
-    
+
     if sens.positive:
         count = 0
         for ob in sens.hitObjectList:
-            if 'type' in ob and ob['type'] == 'shp': 
+            if 'type' in ob and ob['type'] == 'shp':
                 count += 1
-        
+
         if count >= own['sheep_count']:
             # Sheep ground sensor
             act = cont.actuators['sheep_caught']

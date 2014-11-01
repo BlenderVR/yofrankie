@@ -31,40 +31,40 @@ from bge import logic
 def main(cont):
     # This is set in init_options
     conf = logic.globalDict['CONFIG']
-    
+
     own = cont.owner
-    
+
     # print("Grabbing Key", own.getName())
-    
+
     # We only have 1 key sensor
     # its name is used to reference the python setting
-    sensor = cont.sensors[0] 
-    
+    sensor = cont.sensors[0]
+
     own_display = sensor.owner # the sensor is on the object displaying the text
-    
+
     key_id = None
-    
+
     for k_id, press_stat in sensor.events:
         # print('key id', k_id, press_stat)
         if not press_stat == 3: #1 is down 3, is for key up... ok???
             key_id = k_id
             break
-        
+
     if key_id == None:
         print('NoKey Presed')
         return
-    
-    
+
+
     # Lets be tricky here
     # the object name is prefixed by the Python dictionary key for configuring it.
     # remember to remove OB
     conf_dict_key = own_display.name.split('.')[0]
-    
+
     conf[conf_dict_key] = key_id
-    
+
     # Display the name
     own_display['Text'] = events.EventToString(key_id).replace('ARROW', '').replace('KEY', '').lower()
-    
+
     # Go to next state
     for actu in cont.actuators:
         cont.activate(actu)

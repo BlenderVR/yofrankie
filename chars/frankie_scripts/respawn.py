@@ -26,7 +26,7 @@ from bge import logic
 
 def main(cont):
     own = cont.owner
-    
+
     # If somthing is carrying us. tell it to not bother anymore.
     parent = own.parent
     if parent:
@@ -34,22 +34,22 @@ def main(cont):
             parent['carrying'] = 0
         else:
             print('\twarning, parented to a non "carrying" object. should never happen')
-        
+
         own.removeParent()
-    
+
     own.restoreDynamics() # only needed for reviving from lava
-    
+
     own.localPosition = [float(num) for num in own['orig_pos'].split()]
     own.setLinearVelocity((0.0, 0.0, 0.0), True)
-    
+
     props = logic.globalDict['PROP_BACKUP'][own['id']]
-    
+
     # We backed these up, see frank_init
     for prop, value in props.items():
         own[prop] = value
-    
+
     # Update the HUD
     hud_dict = logic.globalDict['HUD']
     if own['id'] == 0:  hud_dict['life_p1'] = own['life']
     else:               hud_dict['life_p2'] = own['life']
-    
+
