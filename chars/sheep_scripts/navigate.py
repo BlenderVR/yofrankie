@@ -142,7 +142,7 @@ def angle_target(own, cont, own_pos):
     # Head towards our target
     direction = target_direction(own, cont, own_pos)
 
-    # own_mat = Matrix(*own.localOrientation).transpose()
+    # own_mat = Matrix(*own.localOrientation).transposed()
     own_y = Vector(own.getAxisVect((0.0, 1.0, 0.0)))
     own_y.z = 0.0
     ang = own_y.angle(direction)

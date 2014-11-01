@@ -108,7 +108,7 @@ def main(cont):
 
         #new_portal.setPosition(hit_first)
         new_portal.worldPosition = pos_xy
-        new_portal.worldOrientation = mat.transpose()
+        new_portal.worldOrientation = mat.transposed()
         if nor_first:
             new_portal.alignAxisToVect(nor_first, 2)
 
