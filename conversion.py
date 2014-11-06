@@ -20,6 +20,10 @@ def rename_action(action):
 def update_actions():
     """"""
     for action in bpy.data.actions:
+
+        if action.library:
+            continue
+
         if action.users == 0:
             action.use_fake_user = True
 
@@ -53,9 +57,10 @@ def create_children_action_actuators(ob, actuator):
 
     # create the new actuators
     actuators = []
-    name = "{0} : Child".format(actuator.name)
     for child in children:
         if child.animation_data and child.animation_data.action:
+            name = "{0} : Child : {1}".format(actuator.name, child.name)
+
             bpy.ops.logic.actuator_add(type='ACTION', name=name, object=child.name)
             _actuator = child.game.actuators[name]
             _actuator.action = child.animation_data.action
@@ -87,6 +92,10 @@ def create_children_action_actuators(ob, actuator):
 
 def update_objects():
     for ob in bpy.data.objects:
+
+        if ob.library:
+            continue
+
         for actuator in ob.game.actuators:
             if actuator.type == 'ACTION':
                 if actuator.apply_to_children:
