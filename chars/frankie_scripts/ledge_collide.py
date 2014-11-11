@@ -28,7 +28,7 @@ Most of the logic here is in "ledge_test.frankTestLedge"
 '''
 from bge import logic
 import mathutils
-from ledge_test import frankTestLedge
+from .ledge_test import frankTestLedge
 
 def main(cont):
     REGRIP_TIME = 0.8 # How long before you regrip

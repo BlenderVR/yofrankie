@@ -42,7 +42,7 @@ DBL_JUMP_BEGIN_TIME = 0.3 # How long after jumping your allowed to double jump
 def do_pradict_land(own, cont, velocity):
     # Check if we should land?
     if velocity[2] < -2.0: # Check downward falling velocity, 0.0 could be used but -2.0 seems good enough
-        ray_to = own.worldPosition[:]
+        ray_to = own.worldPosition.copy()
         ray_to[2] -= 10.0
         if own.rayCastTo(ray_to, 0.6, 'ground'):
             cont.activate('landing')
